@@ -27,7 +27,11 @@
 package parser.visitor;
 
 import parser.ast.*;
+import parser.ast.Module;
 import prism.PrismLangException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Variant of ASTTraverse.
 // Performs a depth-first traversal of an asbtract syntax tree (AST),
@@ -684,16 +688,16 @@ public class ASTTraverseModify implements ASTVisitor
 	}
 	public void visitPost(Filter e) throws PrismLangException { defaultVisitPost(e); }
 	// -----------------------------------------------------------------------------------
-	public void visitPre(SwarmFile e) throws PrismLangException { defaultVisitPre(e); }
+	public void visitPre(SyncSwarmFile e) throws PrismLangException { defaultVisitPre(e); }
 	@Override
-	public Object visit(SwarmFile e) throws PrismLangException {
+	public Object visit(SyncSwarmFile e) throws PrismLangException {
 		visitPre(e);
 		e.setAgent((Agent) e.getAgent().accept(this));
 		e.setEnvironment((Agent) e.getEnvironment().accept(this));
 		e.setLabelList((LabelList) e.getLabelList().accept(this));
 		return e;
 	}
-	public void visitPost(SwarmFile e) throws PrismLangException { defaultVisitPost(e); }
+	public void visitPost(SyncSwarmFile e) throws PrismLangException { defaultVisitPost(e); }
 	// -----------------------------------------------------------------------------------
 	public void visitPre(Agent e) throws PrismLangException { defaultVisitPre(e); }
 	@Override
@@ -731,5 +735,42 @@ public class ASTTraverseModify implements ASTVisitor
 	}
 	public void visitPost(AgentUpdate e) throws PrismLangException { defaultVisitPost(e); }
 	// -----------------------------------------------------------------------------------
+	public void visitPre(FaultFile e) throws PrismLangException { defaultVisitPre(e); }
+	public Object visit(FaultFile faultFile) throws PrismLangException {
+		visitPre(faultFile);
+		ArrayList<Expression> newGuards = new ArrayList<>();
+		ArrayList<Updates> newUpdates = new ArrayList<>();
+		for (int i = 0; i < faultFile.getGuards().size(); ++i) {
+			newGuards.add((Expression) faultFile.getGuards().get(i).accept(this));
+			newUpdates.add((Updates) faultFile.getUpdates().get(i).accept(this));
+		}
+		faultFile.setGuards(newGuards);
+		faultFile.setUpdates(newUpdates);
+		visitPost(faultFile);
+		return faultFile;
+	}
+	public void visitPost(FaultFile e) throws PrismLangException { defaultVisitPost(e); }
+	// -----------------------------------------------------------------------------------
+	public void visitPre(ActionTypes e) throws PrismLangException { defaultVisitPre(e); }
+	public Object visit(ActionTypes actionTypes) throws PrismLangException {
+		visitPre(actionTypes);
+		visitPost(actionTypes);
+		return actionTypes;
+	}
+	public void visitPost(ActionTypes e) throws PrismLangException { defaultVisitPost(e); }
+	// -----------------------------------------------------------------------------------
+	public void visitPre(AsyncSwarmFile e) throws PrismLangException { defaultVisitPre(e); }
+	public Object visit(AsyncSwarmFile swarmFile) throws PrismLangException {
+		visitPre(swarmFile);
+		swarmFile.setActionTypes((ActionTypes) swarmFile.getActionTypes().accept(this));
+		List<Module> newAgents = new ArrayList<>();
+		for (Module agent : swarmFile.getAgents())
+			newAgents.add((Module) agent.accept(this));
+		swarmFile.setAgents(newAgents);
+		swarmFile.setEnvironment((Module) swarmFile.getEnvironment().accept(this));
+		visitPost(swarmFile);
+		return swarmFile;
+	}
+	public void visitPost(AsyncSwarmFile e) throws PrismLangException { defaultVisitPost(e); }
 }
 

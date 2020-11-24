@@ -3,9 +3,7 @@ package parser.ast;
 import parser.visitor.ASTVisitor;
 import prism.PrismLangException;
 
-import java.util.ArrayList;
-
-public class SwarmFile extends ASTElement {
+public class SyncSwarmFile extends ASTElement {
     private Agent agent;
     private Agent environment;
     private LabelList labelList = new LabelList();
@@ -46,7 +44,7 @@ public class SwarmFile extends ASTElement {
 
     @Override
     public ASTElement deepCopy() {
-        SwarmFile other = new SwarmFile();
+        SyncSwarmFile other = new SyncSwarmFile();
         other.setAgent((Agent) agent.deepCopy());
         other.setEnvironment((Agent) environment.deepCopy());
         other.setLabelList((LabelList) labelList.deepCopy());

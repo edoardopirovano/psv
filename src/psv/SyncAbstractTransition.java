@@ -8,16 +8,15 @@ import prism.PrismLangException;
 import simulator.ChoiceListFlexi;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-public class AbstractTransition extends ChoiceListFlexi {
+public class SyncAbstractTransition extends ChoiceListFlexi {
     private final Set<String> abstractActions;
     private final Set<String> actionSet;
     private final Agent agent;
 
-    AbstractTransition(ChoiceListFlexi choice, Set<String> abstractActions, Agent agent, Set<String> actionSet) {
+    SyncAbstractTransition(ChoiceListFlexi choice, Set<String> abstractActions, Agent agent, Set<String> actionSet) {
         super(choice);
         this.abstractActions = abstractActions;
         this.actionSet = actionSet;

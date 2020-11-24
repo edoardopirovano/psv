@@ -16,8 +16,8 @@ import simulator.TransitionList;
 
 import java.util.*;
 
-public class ConcreteModelGenerator extends DefaultModelGenerator implements CSGModelGenerator {
-    SwarmFile swarmFile;
+public class SyncConcreteModelGenerator extends DefaultModelGenerator implements CSGModelGenerator {
+    SyncSwarmFile swarmFile;
 
     private VarList varList = new VarList();
     private LabelList labelList;
@@ -37,7 +37,7 @@ public class ConcreteModelGenerator extends DefaultModelGenerator implements CSG
     // Has the transition list been built?
     private boolean transitionListBuilt;
 
-    ConcreteModelGenerator(SwarmFile swarmFile, int n) throws PrismException {
+    SyncConcreteModelGenerator(SyncSwarmFile swarmFile, int n) throws PrismException {
         this.swarmFile = swarmFile;
         Values constantValues = new Values();
 

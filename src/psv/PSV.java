@@ -4,7 +4,7 @@ import org.apache.commons.cli.*;
 import parser.PrismParser;
 import parser.ast.LabelList;
 import parser.ast.PropertiesFile;
-import parser.ast.SwarmFile;
+import parser.ast.SyncSwarmFile;
 import prism.*;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class PSV {
     private PrismLog mainLog = new PrismFileLog("stdout");
     private Prism prism = new Prism(mainLog);
-    private SwarmFile sf;
+    private SyncSwarmFile sf;
     private PropertiesFile pf;
     private ModelGenerator modelGenerator;
     private IndexCalculator indexCalculator = new IndexCalculator();
@@ -62,7 +62,7 @@ public class PSV {
         readInSwarmFile(cmd.getOptionValue("s"));
         readInPropertiesFile(cmd.getOptionValue("p"));
         if (cmd.hasOption("c"))
-            modelGenerator = new ConcreteModelGenerator(sf, NumberUtils.createInteger(cmd.getOptionValue("c")));
+            modelGenerator = new SyncConcreteModelGenerator(sf, NumberUtils.createInteger(cmd.getOptionValue("c")));
         else
             createAbstractModelGenerator();
         prism.loadModelGenerator(modelGenerator);
@@ -81,7 +81,7 @@ public class PSV {
             throw new IllegalStateException(e);
         }
         try (FileInputStream fis = new FileInputStream(new File(fileName))) {
-            sf = parser.parseSwarmFile(fis);
+            sf = parser.parseSyncSwarmFile(fis);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         } finally {
@@ -110,7 +110,7 @@ public class PSV {
         processLabelList(pf.getLabelList());
         for (int i = 0; i < pf.getNumProperties(); ++i)
             pf.getPropertyObject(i).getExpression().accept(indexCalculator);
-        modelGenerator = new AbstractModelGenerator(sf, indexCalculator.getIndex());
+        modelGenerator = new SyncAbstractModelGenerator(sf, indexCalculator.getIndex());
         indexCalculator.reset();
     }
 

@@ -36,11 +36,9 @@ package parser;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.HashSet;
 
 import jltl2ba.SimpleLTL;
-import parser.BooleanUtils;
 import parser.ast.*;
 import parser.type.*;
 import prism.ModelInfo;
@@ -53,7 +51,7 @@ public class PrismParser
 {
 	// The model associated with the properties file being parsed
 	private static ModelInfo modelInfo;
-	
+
 	// List of keyword strings
 	private static ArrayList<String> keywordList = new ArrayList<String>();
 	static {
@@ -62,7 +60,7 @@ public class PrismParser
 			keywordList.add(PrismParserConstants.tokenImage[i].replaceAll("\"", ""));
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------------------
 	// Main method for testing purposes
 	//-----------------------------------------------------------------------------------
@@ -72,7 +70,7 @@ public class PrismParser
 		PrismParser p = null;
 		InputStream str = null;
 		String src = null;
-		
+
 		try {
 			if (args.length == 0) {
 				System.out.println("Usage: java parser.PrismParser <switch> [<file>]");
@@ -82,12 +80,12 @@ public class PrismParser
 				System.out.println("                  -ltl or -l");
 				System.exit(1);
 			}
-			
+
 			p = new PrismParser();
 			str = (args.length > 1) ? new FileInputStream(args[1]) : System.in;
 			src = (args.length > 1) ? "file "+args[1] : "stdin";
 			System.out.println("Reading from "+src+"...\n");
-			
+
 			if (args[0].equals("-modulesfile") || args[0].equals("-mf")) {
 				ModulesFile mf = p.parseModulesFile(str);
 				System.out.print("Modules file:\n=============\n\n" + mf);
@@ -165,15 +163,15 @@ public class PrismParser
 		// Call default constructor
 		this(System.in);
 	}
-	
+
 	// Parse modules file
-	
+
 	public ModulesFile parseModulesFile(InputStream str) throws PrismLangException { return parseModulesFile(str, null); }
-	
+
 	public ModulesFile parseModulesFile(InputStream str, ModelType typeOverride) throws PrismLangException
 	{
 		ModulesFile mf = null;
-		
+
 		// (Re)start parser
 		ReInit(str);
 		// Parse
@@ -187,19 +185,19 @@ public class PrismParser
 		if (typeOverride != null) {
 			mf.setModelType(typeOverride);
 		}
-		
+
 		return mf;
 	}
 
-	public SwarmFile parseSwarmFile(InputStream str) throws PrismLangException
+	public SyncSwarmFile parseSyncSwarmFile(InputStream str) throws PrismLangException
 	{
-		SwarmFile sf = null;
+		SyncSwarmFile sf = null;
 
 		// (Re)start parser
 		ReInit(str);
 		// Parse
 		try {
-			sf = SwarmFile();
+			sf = SyncSwarmFile();
 		}
 		catch (ParseException e) {
 			throw generateSyntaxError(e);
@@ -207,16 +205,50 @@ public class PrismParser
 
 		return sf;
 	}
-	
+
+	public AsyncSwarmFile parseAsyncSwarmFile(InputStream str) throws PrismLangException
+	{
+		AsyncSwarmFile sf = null;
+
+		// (Re)start parser
+		ReInit(str);
+		// Parse
+		try {
+			sf = AsyncSwarmFile();
+		}
+		catch (ParseException e) {
+			throw generateSyntaxError(e);
+		}
+
+		return sf;
+	}
+
+	public FaultFile parseFaultFile(InputStream str) throws PrismLangException
+	{
+		FaultFile ff = null;
+
+		// (Re)start parser
+		ReInit(str);
+		// Parse
+		try {
+			ff = FaultFile();
+		}
+		catch (ParseException e) {
+			throw generateSyntaxError(e);
+		}
+
+		return ff;
+	}
+
 	// Parse properties file (pass ModulesFile in to get at its constants)
-	
+
 	public PropertiesFile parsePropertiesFile(ModelInfo modelInfo, InputStream str) throws PrismLangException
 	{ return parsePropertiesFile(modelInfo, str, false); }
-	
+
 	public PropertiesFile parsePropertiesFile(ModelInfo modelInfo, InputStream str, boolean strict) throws PrismLangException
 	{
 		PropertiesFile pf = null;
-		
+
 		// (Re)start parser
 		ReInit(str);
 		this.modelInfo = modelInfo;
@@ -230,13 +262,13 @@ public class PrismParser
 
 		return pf;
 	}
-	
+
 	// Parse a single expression
-	
+
 	public Expression parseSingleExpression(InputStream str) throws PrismLangException
 	{
 		Expression expr = null;
-		
+
 		// (Re)start parser
 		ReInit(str);
 		// Parse
@@ -248,13 +280,13 @@ public class PrismParser
 		}
 		return expr;
 	}
-	
+
 	// Parse a single LTL formula
-	
+
 	public Expression parseSingleLTLFormula(InputStream str) throws PrismLangException
 	{
 		Expression expr = null;
-		
+
 		// (Re)start parser
 		ReInit(str);
 		// Parse
@@ -266,13 +298,13 @@ public class PrismParser
 		}
 		return expr;
 	}
-	
+
 	// Parse a for loop
-	
+
 	public ForLoop parseForLoop(InputStream str) throws PrismLangException
 	{
 		ForLoop fl = null;
-		
+
 		// (Re)start parser
 		ReInit(str);
 		// Parse
@@ -284,11 +316,11 @@ public class PrismParser
 		}
 		return fl;
 	}
-	
+
 	//-----------------------------------------------------------------------------------
 	// Some utility methods
 	//-----------------------------------------------------------------------------------
-	
+
 	/**
 	 * Get comment block directly preceding a token and remove "//" characters
 	 */
@@ -296,7 +328,7 @@ public class PrismParser
 	{
 		String comment = "", s;
 		Token t = firstToken;
-		
+
 		// extract any comment from the previous lines of the file
 		if (t.specialToken != null && !(t.specialToken.kind == PrismParserConstants.WHITESPACE && t.specialToken.image.matches("[\\n\\r]*"))) {
 			// trace back thru special tokens that are comments
@@ -322,12 +354,12 @@ public class PrismParser
 		// remove final new line (if present)
 		if (comment.length() > 0 && (comment.charAt(comment.length()-1) == '\n'))
 			comment = comment.substring(0,comment.length()-1);
-		
+
 		return comment;
 	}
-	
+
 	// Add "//"s into comment block
-	
+
 	public static String slashCommentBlock(String comment)
 	{
 		int i;
@@ -344,7 +376,7 @@ public class PrismParser
 		if (comment.trim().length()>0) res += "// " + comment + "\n";
 		return res;
 	}
-	
+
 	/**
 	 * Test a string to see if it is a PRISM language keyword.
 	 */
@@ -352,7 +384,7 @@ public class PrismParser
 	{
 		return keywordList.contains(s);
 	}
-	
+
 	/**
 	 * Get access to the list of all PRISM language keywords.
 	 */
@@ -360,15 +392,15 @@ public class PrismParser
 	{
 		return keywordList;
 	}
-	
+
 	/**
 	 * Set the tab size used by the lexer/parser.
 	 */
-	public void setTabSize(int size) 
+	public void setTabSize(int size)
 	{
-		SimpleCharStream.setTabSize(size);   
+		SimpleCharStream.setTabSize(size);
 	}
-	
+
 	/**
 	 * Get the tab size used by the lexer/parser.
 	 */
@@ -376,7 +408,7 @@ public class PrismParser
 	{
 		return SimpleCharStream.getTabSize();
 	}
-	
+
 	/**
 	 * Generate a syntax error (PrismLangException) from a ParseException.
 	 */
@@ -409,11 +441,11 @@ public class PrismParser
 			return new PrismLangException(exMsg, tmp);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------------------
 	// A few classes for temporary storage of bits of the AST
 	//-----------------------------------------------------------------------------------
-	
+
 	static class ExpressionPair { public Expression expr1 = null; public Expression expr2 = null; }
 }
 
@@ -446,6 +478,9 @@ TOKEN :
 	< A:				"A" >
 |	< AGENT:			"agent" >
 //|	< ARRAY:			"array" >
+|	< ASYNC:			"asynchronous" >
+|	< AE:	    		"agentEnvironment" >
+|	< GS:			    "globalSynchronous" >
 |	< BOOL:				"bool" >
 |	< CLOCK:			"clock" >
 |	< CONST:			"const" >
@@ -581,12 +616,39 @@ TOKEN :
 // Top-level productions
 //-----------------------------------------------------------------------------------
 
-// Swarm file
-SwarmFile SwarmFile() throws PrismLangException :
+// Asynchronous swarm file
+AsyncSwarmFile AsyncSwarmFile() throws PrismLangException :
+{
+    ActionTypes acts = null;
+    Module agent = null;
+    List<Module> agents = new ArrayList<Module>();
+    Module e = null;
+	AsyncSwarmFile sf = new AsyncSwarmFile();
+	Token begin = null;
+}
+{
+	( { begin = getToken(1); }
+	acts = ActionTypes()
+	(<AGENT> agent = Module() { agents.add(agent); })+
+	<ENVIRONMENT>
+	e = Module()
+	( LabelDef(sf.getLabelList()) )*
+	) <EOF>
+	{
+	    sf.setActionTypes(acts);
+		sf.setAgents(agents);
+		sf.setEnvironment(e);
+		sf.setPosition(begin != null? begin: getToken(0), getToken(0));
+		return sf;
+	}
+}
+
+// Synchronous swarm file
+SyncSwarmFile SyncSwarmFile() throws PrismLangException :
 {
     Agent a = null;
     Agent e = null;
-	SwarmFile sf = new SwarmFile();
+	SyncSwarmFile sf = new SyncSwarmFile();
 	Token begin = null;
 }
 {
@@ -603,6 +665,69 @@ SwarmFile SwarmFile() throws PrismLangException :
 		sf.setPosition(begin != null? begin: getToken(0), getToken(0));
 		return sf;
 	}
+}
+
+// Fault file
+FaultFile FaultFile() throws PrismLangException :
+{
+	ArrayList<String> commands = new ArrayList<String>();
+	ArrayList<Expression> guards = new ArrayList<Expression>();
+	ArrayList<Updates> updates = new ArrayList<Updates>();
+	String command;
+	Expression guard;
+	Updates update;
+	FaultFile ff = new FaultFile();
+	Token begin = null;
+}
+{
+	( { begin = getToken(1); }
+	( <LPARENTH>
+	 command = Identifier() { commands.add(command); }
+	 <COMMA>
+	 guard = Expression(false, false) { guards.add(guard); }
+	 <RPARENTH>
+	 <RARROW>
+	 update = Updates() { updates.add(update); }
+	 <SEMICOLON>
+	 )*
+	) <EOF>
+	{
+	    ff.setCommands(commands);
+	    ff.setGuards(guards);
+	    ff.setUpdates(updates);
+		return ff;
+	}
+}
+
+ActionTypes ActionTypes() throws PrismLangException :
+{
+    ActionTypes acts = new ActionTypes();
+    String act = null;
+    HashSet<String> a = new HashSet<String>();
+    HashSet<String> ae = new HashSet<String>();
+    HashSet<String> gs = new HashSet<String>();
+	Token begin = null;
+}
+{
+    ( begin = <ASYNC> <EQ> <LBRACE>
+	    ( act = Identifier() { a.add(act); }
+	    ( <COMMA> act = Identifier() { a.add(act); } )* )?
+	<RBRACE>
+	<AE> <EQ> <LBRACE>
+    	( act = Identifier() { ae.add(act); }
+    	( <COMMA> act = Identifier() { ae.add(act); } )* )?
+    <RBRACE>
+	<GS> <EQ> <LBRACE>
+    	( act = Identifier() { gs.add(act); }
+    	( <COMMA> act = Identifier() { gs.add(act); } )* )?
+    <RBRACE>
+    ) {
+        acts.setA(a);
+        acts.setAe(ae);
+        acts.setGs(gs);
+		acts.setPosition(begin != null? begin: getToken(0), getToken(0));
+		return acts;
+    }
 }
 
 // Agent description

@@ -92,9 +92,12 @@ public interface ASTVisitor
 	public Object visit(ForLoop e) throws PrismLangException;
 
 	// Swarm classes
-	public Object visit(SwarmFile swarmFile) throws PrismLangException;;
+	public Object visit(SyncSwarmFile swarmFile) throws PrismLangException;;
 	public Object visit(Agent agent) throws PrismLangException;
 	public Object visit(Action action) throws PrismLangException;
 	public Object visit(AgentUpdate agentUpdate) throws PrismLangException;
+	public Object visit(FaultFile agentUpdate) throws PrismLangException;
+	public Object visit(AsyncSwarmFile agentUpdate) throws PrismLangException;
+	public Object visit(ActionTypes agentUpdate) throws PrismLangException;
 }
 

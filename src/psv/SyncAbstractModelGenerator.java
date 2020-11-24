@@ -12,11 +12,11 @@ import simulator.ChoiceListFlexi;
 
 import java.util.*;
 
-public class AbstractModelGenerator extends ConcreteModelGenerator {
-    private Agent abstractAgent;
-    private VarList abstractVarList = new VarList();
+public class SyncAbstractModelGenerator extends SyncConcreteModelGenerator {
+    private final Agent abstractAgent;
+    private final VarList abstractVarList = new VarList();
 
-    AbstractModelGenerator(SwarmFile sf, int index) throws PrismException {
+    SyncAbstractModelGenerator(SyncSwarmFile sf, int index) throws PrismException {
         super(sf, index);
         RenamedModule rm = new RenamedModule("agent", "agent_abs");
         for (Declaration decl : swarmFile.getAgent().getDecls()) {
@@ -77,7 +77,7 @@ public class AbstractModelGenerator extends ConcreteModelGenerator {
                 int i = 1;
                 for (Agent renamedAgent : renamedAgents)
                     addUpdates(jointAction.get(i++), actionSet, choice, renamedAgent);
-                transitionList.add(new AbstractTransition(choice, abstractActions, abstractAgent, actionSet));
+                transitionList.add(new SyncAbstractTransition(choice, abstractActions, abstractAgent, actionSet));
             }
         }
     }
