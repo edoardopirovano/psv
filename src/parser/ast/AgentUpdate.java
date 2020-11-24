@@ -22,7 +22,7 @@ public class AgentUpdate extends ASTElement {
         return stateCondition;
     }
 
-    public void setStateCondition(Expression stateCondition) {
+    public void setStateCondition(final Expression stateCondition) {
         this.stateCondition = stateCondition;
     }
 
@@ -38,21 +38,19 @@ public class AgentUpdate extends ASTElement {
         return actionName;
     }
 
-    public void addAction(String a)
-    {
+    public void addAction(final String a) {
         actions.add(a);
     }
 
-    public void setUpdates(Updates u)
-    {
+    public void setUpdates(final Updates u) {
         updates = u;
     }
 
-    public void setActionName(String actionName) {
+    public void setActionName(final String actionName) {
         this.actionName = actionName;
     }
 
-    public void setActions(ArrayList<String> actions) {
+    public void setActions(final ArrayList<String> actions) {
         this.actions = actions;
     }
 
@@ -60,25 +58,25 @@ public class AgentUpdate extends ASTElement {
         return inclusionType;
     }
 
-    public void setInclusionType(int inclusionType) {
+    public void setInclusionType(final int inclusionType) {
         this.inclusionType = inclusionType;
     }
 
     @Override
-    public Object accept(ASTVisitor v) throws PrismLangException {
+    public Object accept(final ASTVisitor v) throws PrismLangException {
         return v.visit(this);
     }
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder("(" + actionName + "," + stateCondition.toString() + ",");
+        final StringBuilder s = new StringBuilder("(" + actionName + "," + stateCondition.toString() + ",");
         if (inclusionType == AgentUpdate.EQ)
             s.append("=");
         if (inclusionType == AgentUpdate.NOTIN)
             s.append("!");
         s.append("{");
         if (!actions.isEmpty()) {
-            for (String action : actions)
+            for (final String action : actions)
                 s.append(action).append(",");
             s.deleteCharAt(s.lastIndexOf(","));
         }
@@ -88,8 +86,8 @@ public class AgentUpdate extends ASTElement {
 
     @Override
     public ASTElement deepCopy() {
-        AgentUpdate other = new AgentUpdate();
-        for (String action : actions)
+        final AgentUpdate other = new AgentUpdate();
+        for (final String action : actions)
             other.addAction(action);
         other.setUpdates((Updates) updates.deepCopy());
         other.setStateCondition(stateCondition.deepCopy());
@@ -98,24 +96,31 @@ public class AgentUpdate extends ASTElement {
         return other;
     }
 
-    public boolean isEnabled(State exploreState, Set<String> actionSet, String action) throws PrismLangException {
-        if (!action.substring(0,action.lastIndexOf("_")).equals(actionName))
+    public static String stripIdentifier(final String action) {
+        final String stripFirst = action.substring(0, action.lastIndexOf("_"));
+        if (action.endsWith("_E"))
+            return stripFirst;
+        return stripFirst.substring(0, stripFirst.lastIndexOf("_"));
+    }
+
+    public boolean isEnabled(final State exploreState, final Set<String> actionSet, final String action) throws PrismLangException {
+        if (!stripIdentifier(action).equals(actionName))
             return false;
         if (!stateCondition.evaluateBoolean(exploreState))
             return false;
         if (inclusionType == AgentUpdate.NOTIN) {
-            for (String act : actions) {
+            for (final String act : actions) {
                 if (actionSet.contains(act))
                     return false;
             }
             return true;
         }
-        for (String act : actions) {
+        for (final String act : actions) {
             if (!actionSet.contains(act))
                 return false;
         }
         if (inclusionType == AgentUpdate.EQ) {
-            for (String act : actionSet) {
+            for (final String act : actionSet) {
                 if (!actions.contains(act))
                     return false;
             }

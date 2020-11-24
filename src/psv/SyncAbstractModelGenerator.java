@@ -62,7 +62,7 @@ public class SyncAbstractModelGenerator extends SyncConcreteModelGenerator {
             for (final State state : stateSet) {
                 for (final Action action : abstractAgents.get(i).getActions()) {
                     if (action.getCondition().evaluateBoolean(state))
-                        possibleActions.add(action.getName() + "_" + i + ",abs");
+                        possibleActions.add(action.getName() + "_" + i + "-abs");
                 }
             }
         }
@@ -77,9 +77,9 @@ public class SyncAbstractModelGenerator extends SyncConcreteModelGenerator {
                 actionNames.add(actionString.toString());
                 final ActionSet<String> actionSet = new ActionSet<>();
                 for (final String action : jointAction)
-                    actionSet.add(action.substring(0, action.lastIndexOf("_")));
+                    actionSet.add(AgentUpdate.stripIdentifier(action));
                 for (final String action : abstractActions)
-                    actionSet.add(action.substring(0, action.lastIndexOf("_")));
+                    actionSet.add(AgentUpdate.stripIdentifier(action));
                 final ChoiceListFlexi choice = new ChoiceListFlexi();
                 choice.add(1.0, new LinkedList<>());
                 addUpdates(jointAction.get(0), actionSet, choice, environment);

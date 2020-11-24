@@ -46,10 +46,10 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
             final Agent agent = swarmFile.getAgents().get(i - 1);
             final List<Agent> renamed = new ArrayList<>(numAgents.get(i - 1));
             for (int j = 1; j <= numAgents.get(i - 1); ++j) {
-                final RenamedModule rm = new RenamedModule("agent", "agent_" + i + "," + j);
+                final RenamedModule rm = new RenamedModule("agent", "agent_" + i + "_" + j);
                 for (final Declaration decl : agent.getDecls()) {
                     final Declaration declarationCopy = (Declaration) decl.deepCopy();
-                    declarationCopy.setName(decl.getName() + "_" + i + "," + j);
+                    declarationCopy.setName(decl.getName() + "_" + i + "_" + j);
                     varList.addVar(declarationCopy, 0, constantValues);
                     rm.addRename(decl.getName(), declarationCopy.getName());
                 }
@@ -228,7 +228,7 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
             actionNames.add(actionString.toString());
             final ActionSet<String> actionSet = new ActionSet<>();
             for (final String action : jointAction)
-                actionSet.add(action.substring(0, action.lastIndexOf("_")));
+                actionSet.add(AgentUpdate.stripIdentifier(action));
             final ChoiceListFlexi choice = new ChoiceListFlexi();
             choice.add(1.0, new LinkedList<>());
             addUpdates(jointAction.get(0), actionSet, choice, environment);
@@ -246,18 +246,18 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
         for (final Action action : environment.getActions()) {
             if (action.getCondition().evaluateBoolean(exploreState)) {
                 final LinkedList<String> actions = new LinkedList<>();
-                actions.add(action.getName() + "_0");
+                actions.add(action.getName() + "_E");
                 jointActions.add(actions);
             }
         }
         for (int i = 1; i <= renamedAgents.size(); ++i) {
-            for (int j = 1; j <= renamedAgents.size(); ++j) {
+            for (int j = 1; j <= renamedAgents.get(i - 1).size(); ++j) {
                 final List<List<String>> newJointActions = new LinkedList<>();
                 for (final Action action : renamedAgents.get(i - 1).get(j - 1).getActions()) {
                     if (action.getCondition().evaluateBoolean(exploreState)) {
                         for (final List<String> jointAction : jointActions) {
                             final LinkedList<String> newJointAction = new LinkedList<>(jointAction);
-                            newJointAction.add(action.getName() + "_" + i + "," + j);
+                            newJointAction.add(action.getName() + "_" + i + "_" + j);
                             newJointActions.add(newJointAction);
                         }
                     }
@@ -300,7 +300,7 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
     @Override
     public Player getPlayer(final int i) {
         if (i == 0) {
-            final Player player = new Player("E");
+            final Player player = new Player("env");
             for (final Action action : environment.getActions())
                 player.addAction(action.getName() + "_E");
             return player;
@@ -315,9 +315,9 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
                 break;
             b -= renamedAgents.get(a).size();
         }
-        final Player player = new Player("agent_" + (a + 1) + "," + (b + 1));
+        final Player player = new Player("agent_" + (a + 1) + "_" + (b + 1));
         for (final Action action : renamedAgents.get(a).get(b).getActions())
-            player.addAction(action.getName() + "_" + (a + 1) + "," + (b + 1));
+            player.addAction(action.getName() + "_" + (a + 1) + "_" + (b + 1));
         return player;
     }
 

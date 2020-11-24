@@ -1,0 +1,39 @@
+agent
+	stateA : [0..1] init 0;
+
+	[a] (stateA=0);
+	[b] (stateA=1);
+
+	[null] true;
+	
+	update
+		(a, true, {}) -> 0.5:(stateA'=0) + 0.5:(stateA'=1);
+	endupdate
+endagent
+
+agent
+	stateB : [2..3] init 2;
+
+	[c] (stateB=2);
+	[d] (stateB=3);
+
+	[null] true;
+
+	update
+		(c, true, {x}) -> 1.0:(stateB'=3);
+	endupdate
+endagent
+
+environment
+	state : [4..5] init 4;
+
+	[e] true;
+
+	[null] true;
+	
+	update
+		(e, state=4, {b}) -> 1.0:(state'=5);
+	endupdate
+endenvironment
+
+label "done" = state_E=5;
