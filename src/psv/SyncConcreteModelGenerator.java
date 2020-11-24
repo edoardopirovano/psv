@@ -22,7 +22,7 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
     private final VarList varList = new VarList();
     private final LabelList labelList;
     private final List<String> labelNames;
-    List<Agent> renamedAgents;
+    List<List<Agent>> renamedAgents;
     Agent environment;
 
     // Model exploration info
@@ -40,24 +40,29 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
     SyncConcreteModelGenerator(final SyncSwarmFile swarmFile, final List<Integer> numAgents) throws PrismException {
         this.swarmFile = swarmFile;
         final Values constantValues = new Values();
-        final int n = numAgents.get(0);
-        renamedAgents = new ArrayList<>(n);
-        for (int i = 0; i < n; ++i) {
-            final RenamedModule rm = new RenamedModule("agent", "agent_" + i);
-            for (final Declaration decl : swarmFile.getAgent().getDecls()) {
-                final Declaration declarationCopy = (Declaration) decl.deepCopy();
-                declarationCopy.setName(decl.getName() + "_" + i);
-                varList.addVar(declarationCopy, 0, constantValues);
-                rm.addRename(decl.getName(), declarationCopy.getName());
+
+        renamedAgents = new ArrayList<>(numAgents.size());
+        for (int i = 1; i <= numAgents.size(); ++i) {
+            final Agent agent = swarmFile.getAgents().get(i - 1);
+            final List<Agent> renamed = new ArrayList<>(numAgents.get(i - 1));
+            for (int j = 1; j <= numAgents.get(i - 1); ++j) {
+                final RenamedModule rm = new RenamedModule("agent", "agent_" + i + "," + j);
+                for (final Declaration decl : agent.getDecls()) {
+                    final Declaration declarationCopy = (Declaration) decl.deepCopy();
+                    declarationCopy.setName(decl.getName() + "_" + i + "," + j);
+                    varList.addVar(declarationCopy, 0, constantValues);
+                    rm.addRename(decl.getName(), declarationCopy.getName());
+                }
+                Agent agentCopy = (Agent) agent.deepCopy();
+                agentCopy = (Agent) agentCopy.rename(rm);
+                renamed.add(agentCopy);
             }
-            Agent agentCopy = (Agent) swarmFile.getAgent().deepCopy();
-            agentCopy = (Agent) agentCopy.rename(rm);
-            renamedAgents.add(agentCopy);
+            renamedAgents.add(renamed);
         }
         final RenamedModule rm = new RenamedModule("environment", "env");
         for (final Declaration decl : swarmFile.getEnvironment().getDecls()) {
             final Declaration declarationCopy = (Declaration) decl.deepCopy();
-            declarationCopy.setName(decl.getName() + "_env");
+            declarationCopy.setName(decl.getName() + "_E");
             varList.addVar(declarationCopy, 0, constantValues);
             rm.addRename(decl.getName(), declarationCopy.getName());
         }
@@ -67,8 +72,10 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
         labelNames = labelList.getLabelNames();
 
         final FindAllVars replacer = new FindAllVars(getVarNames(), getVarTypes());
-        for (final Agent agent : renamedAgents)
-            agent.accept(replacer);
+        for (final List<Agent> agents : renamedAgents) {
+            for (final Agent agent : agents)
+                agent.accept(replacer);
+        }
         environment.accept(replacer);
         labelList.accept(replacer);
 
@@ -226,8 +233,10 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
             choice.add(1.0, new LinkedList<>());
             addUpdates(jointAction.get(0), actionSet, choice, environment);
             int i = 1;
-            for (final Agent renamedAgent : renamedAgents)
-                addUpdates(jointAction.get(i++), actionSet, choice, renamedAgent);
+            for (final List<Agent> agents : renamedAgents) {
+                for (final Agent agent : agents)
+                    addUpdates(jointAction.get(i++), actionSet, choice, agent);
+            }
             transitionList.add(choice);
         }
     }
@@ -242,17 +251,19 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
             }
         }
         for (int i = 1; i <= renamedAgents.size(); ++i) {
-            final List<List<String>> newJointActions = new LinkedList<>();
-            for (final Action action : renamedAgents.get(i - 1).getActions()) {
-                if (action.getCondition().evaluateBoolean(exploreState)) {
-                    for (final List<String> jointAction : jointActions) {
-                        final LinkedList<String> newJointAction = new LinkedList<>(jointAction);
-                        newJointAction.add(action.getName() + "_" + i);
-                        newJointActions.add(newJointAction);
+            for (int j = 1; j <= renamedAgents.size(); ++j) {
+                final List<List<String>> newJointActions = new LinkedList<>();
+                for (final Action action : renamedAgents.get(i - 1).get(j - 1).getActions()) {
+                    if (action.getCondition().evaluateBoolean(exploreState)) {
+                        for (final List<String> jointAction : jointActions) {
+                            final LinkedList<String> newJointAction = new LinkedList<>(jointAction);
+                            newJointAction.add(action.getName() + "_" + i + "," + j);
+                            newJointActions.add(newJointAction);
+                        }
                     }
                 }
+                jointActions = newJointActions;
             }
-            jointActions = newJointActions;
         }
         return jointActions;
     }
@@ -280,15 +291,33 @@ public class SyncConcreteModelGenerator extends DefaultModelGenerator implements
 
     @Override
     public int getNumPlayers() {
-        return renamedAgents.size() + 1;
+        int sum = 1; // First player is the environment
+        for (final List<Agent> agents : renamedAgents)
+            sum += agents.size();
+        return sum;
     }
 
     @Override
     public Player getPlayer(final int i) {
-        final Player player = new Player(i == 0 ? "env" : "agent_" + i);
-        final Agent agent = (i == 0 ? environment : renamedAgents.get(i - 1));
-        for (final Action action : agent.getActions())
-            player.addAction(action.getName() + "_" + i);
+        if (i == 0) {
+            final Player player = new Player("E");
+            for (final Action action : environment.getActions())
+                player.addAction(action.getName() + "_E");
+            return player;
+        }
+        int a = -1;
+        int b = i - 1;
+        int seen = 0;
+        while (true) {
+            a++;
+            seen += renamedAgents.get(a).size();
+            if (seen >= i)
+                break;
+            b -= renamedAgents.get(a).size();
+        }
+        final Player player = new Player("agent_" + (a + 1) + "," + (b + 1));
+        for (final Action action : renamedAgents.get(a).get(b).getActions())
+            player.addAction(action.getName() + "_" + (a + 1) + "," + (b + 1));
         return player;
     }
 

@@ -3,8 +3,11 @@ package parser.ast;
 import parser.visitor.ASTVisitor;
 import prism.PrismLangException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SyncSwarmFile extends ASTElement {
-    private Agent agent;
+    private List<Agent> agents;
     private Agent environment;
     private LabelList labelList = new LabelList();
 
@@ -12,40 +15,47 @@ public class SyncSwarmFile extends ASTElement {
         return labelList;
     }
 
-    public void setLabelList(LabelList labelList) {
+    public void setLabelList(final LabelList labelList) {
         this.labelList = labelList;
     }
 
-    public Agent getAgent() {
-        return agent;
+    public List<Agent> getAgents() {
+        return agents;
     }
 
-    public void setAgent(Agent agent) {
-        this.agent = agent;
+    public void setAgents(final List<Agent> agents) {
+        this.agents = agents;
     }
 
     public Agent getEnvironment() {
         return environment;
     }
 
-    public void setEnvironment(Agent environment) {
+    public void setEnvironment(final Agent environment) {
         this.environment = environment;
     }
 
     @Override
-    public Object accept(ASTVisitor v) throws PrismLangException {
+    public Object accept(final ASTVisitor v) throws PrismLangException {
         return v.visit(this);
     }
 
     @Override
     public String toString() {
-        return agent.toString() + "\n" + environment.toString() + "\n" + labelList.toString();
+        String s = "";
+        for (final Agent agent : agents) {
+            s += agent.toString() + "\n";
+        }
+        return s + environment.toString() + "\n" + labelList.toString();
     }
 
     @Override
     public ASTElement deepCopy() {
-        SyncSwarmFile other = new SyncSwarmFile();
-        other.setAgent((Agent) agent.deepCopy());
+        final SyncSwarmFile other = new SyncSwarmFile();
+        final ArrayList<Agent> newAgents = new ArrayList<>();
+        for (final Agent agent : agents)
+            newAgents.add((Agent) agent.deepCopy());
+        other.setAgents(newAgents);
         other.setEnvironment((Agent) environment.deepCopy());
         other.setLabelList((LabelList) labelList.deepCopy());
         return other;

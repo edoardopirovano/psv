@@ -647,21 +647,22 @@ AsyncSwarmFile AsyncSwarmFile() throws PrismLangException :
 // Synchronous swarm file
 SyncSwarmFile SyncSwarmFile() throws PrismLangException :
 {
-    Agent a = null;
+	Agent agent = null;
+    List<Agent> agents = new ArrayList<Agent>();
     Agent e = null;
 	SyncSwarmFile sf = new SyncSwarmFile();
 	Token begin = null;
 }
 {
 	( { begin = getToken(1); }
-	// Agent
-	a = Agent()
+	// Agents
+	(agent = Agent() { agents.add(agent); })+
 	// Environment
 	e = Environment()
 	( LabelDef(sf.getLabelList()) )*
 	) <EOF>
 	{
-		sf.setAgent(a);
+		sf.setAgents(agents);
 		sf.setEnvironment(e);
 		sf.setPosition(begin != null? begin: getToken(0), getToken(0));
 		return sf;

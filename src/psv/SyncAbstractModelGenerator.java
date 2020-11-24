@@ -10,87 +10,98 @@ import parser.visitor.FindAllVars;
 import prism.PrismException;
 import simulator.ChoiceListFlexi;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class SyncAbstractModelGenerator extends SyncConcreteModelGenerator {
-    private final Agent abstractAgent;
-    private final VarList abstractVarList = new VarList();
+    private final List<Agent> abstractAgents = new ArrayList<>();
+    private final List<VarList> abstractVarLists = new ArrayList<>();
 
-    SyncAbstractModelGenerator(SyncSwarmFile sf, List<Integer> index) throws PrismException {
+    SyncAbstractModelGenerator(final SyncSwarmFile sf, final List<Integer> index) throws PrismException {
         super(sf, index);
-        RenamedModule rm = new RenamedModule("agent", "agent_abs");
-        for (Declaration decl : swarmFile.getAgent().getDecls()) {
-            Declaration declarationCopy = (Declaration) decl.deepCopy();
-            declarationCopy.setName(decl.getName() + "_abs");
-            abstractVarList.addVar(declarationCopy, 0, new Values());
-            rm.addRename(decl.getName(), declarationCopy.getName());
+        for (int i = 0; i < index.size(); ++i) {
+            final RenamedModule rm = new RenamedModule("agent", "agent_abs");
+            final VarList abstractVarList = new VarList();
+            for (final Declaration decl : swarmFile.getAgents().get(i).getDecls()) {
+                final Declaration declarationCopy = (Declaration) decl.deepCopy();
+                declarationCopy.setName(decl.getName() + "_abs");
+                abstractVarList.addVar(declarationCopy, 0, new Values());
+                rm.addRename(decl.getName(), declarationCopy.getName());
+            }
+            final Agent agentCopy = (Agent) swarmFile.getAgents().get(i).deepCopy();
+            final Agent abstractAgent = (Agent) agentCopy.rename(rm);
+            abstractAgent.accept(new FindAllVars(getAbstractVarNames(abstractVarList), getAbstractVarTypes(abstractVarList)));
+            abstractAgents.add(abstractAgent);
+            abstractVarLists.add(abstractVarList);
         }
-        Agent agentCopy = (Agent) swarmFile.getAgent().deepCopy();
-        abstractAgent = (Agent) agentCopy.rename(rm);
-        abstractAgent.accept(new FindAllVars(getAbstractVarNames(), getAbstractVarTypes()));
     }
 
     @Override
     public State getInitialState() throws PrismException {
-        State initialState = super.getInitialState();
-        State initialAbstractState = new State(abstractVarList.getNumVars());
-        for (int i = 0; i < abstractVarList.getNumVars(); ++i)
-            initialAbstractState.setValue(i, abstractVarList.getDeclaration(i).getStartOrDefault().evaluate());
-        ActionSet<State> stateSet = new ActionSet<>();
-        stateSet.add(initialAbstractState);
-        State abstractState = new State(1);
-        abstractState.setValue(0, stateSet);
+        final State initialState = super.getInitialState();
+        final State abstractState = new State(abstractAgents.size());
+        for (int i = 0; i < abstractAgents.size(); ++i) {
+            final State initialAbstractState = new State(abstractVarLists.get(i).getNumVars());
+            for (int j = 0; j < abstractVarLists.get(i).getNumVars(); ++j)
+                initialAbstractState.setValue(j, abstractVarLists.get(i).getDeclaration(j).getStartOrDefault().evaluate());
+            final ActionSet<State> initialSet = new ActionSet<>();
+            initialSet.add(initialAbstractState);
+            abstractState.setValue(i, initialSet);
+        }
         return new State(initialState, abstractState);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     void buildTransitionList() throws PrismException {
-        @SuppressWarnings("unchecked")
-        ActionSet<State> stateSet = (ActionSet<State>) getExploreState().varValues[getExploreState().varValues.length - 1];
-
-        ActionSet<String> possibleActions = new ActionSet<>();
-        for (State state : stateSet) {
-            for (Action action : abstractAgent.getActions()) {
-                if (action.getCondition().evaluateBoolean(state))
-                    possibleActions.add(action.getName() + "_abs");
+        final ActionSet<String> possibleActions = new ActionSet<>();
+        for (int i = 0; i < abstractAgents.size(); ++i) {
+            final ActionSet<State> stateSet = (ActionSet<State>) getExploreState().varValues[getExploreState().varValues.length - abstractAgents.size() + i];
+            for (final State state : stateSet) {
+                for (final Action action : abstractAgents.get(i).getActions()) {
+                    if (action.getCondition().evaluateBoolean(state))
+                        possibleActions.add(action.getName() + "_" + i + ",abs");
+                }
             }
         }
-        ActionSet<Set<String>> actionSets = new ActionSet<>(Sets.powerSet(possibleActions));
-        for (List<String> jointAction : getJointActions()) {
-            for (Set<String> unsortedAbstract : actionSets) {
-                ActionSet<String> abstractActions = new ActionSet<>(unsortedAbstract);
-                StringBuilder actionString = new StringBuilder();
-                for (String action : jointAction)
+        final ActionSet<Set<String>> actionSets = new ActionSet<>(Sets.powerSet(possibleActions));
+        for (final List<String> jointAction : getJointActions()) {
+            for (final Set<String> unsortedAbstract : actionSets) {
+                final ActionSet<String> abstractActions = new ActionSet<>(unsortedAbstract);
+                final StringBuilder actionString = new StringBuilder();
+                for (final String action : jointAction)
                     actionString.append("[").append(action).append("]");
                 actionString.append("[").append(abstractActions).append("]");
                 actionNames.add(actionString.toString());
-                ActionSet<String> actionSet = new ActionSet<>();
-                for (String action : jointAction)
+                final ActionSet<String> actionSet = new ActionSet<>();
+                for (final String action : jointAction)
                     actionSet.add(action.substring(0, action.lastIndexOf("_")));
-                for (String action : abstractActions)
+                for (final String action : abstractActions)
                     actionSet.add(action.substring(0, action.lastIndexOf("_")));
-                ChoiceListFlexi choice = new ChoiceListFlexi();
+                final ChoiceListFlexi choice = new ChoiceListFlexi();
                 choice.add(1.0, new LinkedList<>());
-                if ((exploreState.toString().equals("(true,0,[(false)])") & actionString.toString().equals("[receive_0][transmit_1][[transmit0_abs, block0_abs]]")))
-                    System.out.println("Hello");
                 addUpdates(jointAction.get(0), actionSet, choice, environment);
                 int i = 1;
-                for (Agent renamedAgent : renamedAgents)
-                    addUpdates(jointAction.get(i++), actionSet, choice, renamedAgent);
-                transitionList.add(new SyncAbstractTransition(choice, abstractActions, abstractAgent, actionSet));
+                for (final List<Agent> agents : renamedAgents) {
+                    for (final Agent agent : agents)
+                        addUpdates(jointAction.get(i++), actionSet, choice, agent);
+                }
+                transitionList.add(new SyncAbstractTransition(choice, abstractActions, abstractAgents, actionSet));
             }
         }
     }
 
-    private List<String> getAbstractVarNames() {
-        List<String> varNames = new ArrayList<>(abstractVarList.getNumVars());
+    private static List<String> getAbstractVarNames(final VarList abstractVarList) {
+        final List<String> varNames = new ArrayList<>(abstractVarList.getNumVars());
         for (int i = 0; i < abstractVarList.getNumVars(); ++i)
             varNames.add(abstractVarList.getName(i));
         return varNames;
     }
 
-    private List<Type> getAbstractVarTypes() {
-        List<Type> varTypes = new ArrayList<>(abstractVarList.getNumVars());
+    private static List<Type> getAbstractVarTypes(final VarList abstractVarList) {
+        final List<Type> varTypes = new ArrayList<>(abstractVarList.getNumVars());
         for (int i = 0; i < abstractVarList.getNumVars(); ++i)
             varTypes.add(abstractVarList.getType(i));
         return varTypes;
@@ -98,18 +109,20 @@ public class SyncAbstractModelGenerator extends SyncConcreteModelGenerator {
 
     @Override
     public int getNumPlayers() {
-        return super.getNumPlayers() + 1;
+        return super.getNumPlayers() + abstractAgents.size();
     }
 
     @Override
-    public Player getPlayer(int i) {
-        if (i < getNumPlayers() - 1)
+    public Player getPlayer(final int i) {
+        if (i < super.getNumPlayers())
             return super.getPlayer(i);
-        Player player = new Player("abstractAgent");
-        ActionSet<String> actions = new ActionSet<>();
-        for (Action action : abstractAgent.getActions())
-            actions.add(action.getName() + "_abs");
-        for (Set<String> actionSet : new ActionSet<>(Sets.powerSet(actions)))
+        final int abs = i - super.getNumPlayers();
+        final Player player = new Player("abstractAgent_" + abs);
+        final Agent abstractAgent = abstractAgents.get(abs);
+        final ActionSet<String> actions = new ActionSet<>();
+        for (final Action action : abstractAgent.getActions())
+            actions.add(action.getName() + "_" + abs + "_abs");
+        for (final Set<String> actionSet : new ActionSet<>(Sets.powerSet(actions)))
             player.addAction(new ActionSet<>(actionSet).toString());
         return player;
     }
