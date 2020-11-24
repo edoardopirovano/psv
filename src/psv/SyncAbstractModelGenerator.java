@@ -16,7 +16,7 @@ public class SyncAbstractModelGenerator extends SyncConcreteModelGenerator {
     private final Agent abstractAgent;
     private final VarList abstractVarList = new VarList();
 
-    SyncAbstractModelGenerator(SyncSwarmFile sf, int index) throws PrismException {
+    SyncAbstractModelGenerator(SyncSwarmFile sf, List<Integer> index) throws PrismException {
         super(sf, index);
         RenamedModule rm = new RenamedModule("agent", "agent_abs");
         for (Declaration decl : swarmFile.getAgent().getDecls()) {

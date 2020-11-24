@@ -23,10 +23,10 @@ import simulator.TransitionList;
 public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
 	AsyncSwarmFile swarmFile;
 
-	private VarList varList = new VarList();
-	private LabelList labelList;
-	private List<String> labelNames;
-	private List<List<Module>> renamedAgents;
+	private final VarList varList = new VarList();
+	private final LabelList labelList;
+	private final List<String> labelNames;
+	private final List<List<Module>> renamedAgents;
 	private Module environment;
 
 	// Model exploration info
@@ -194,7 +194,7 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
 	}
 
 	@Override
-	public int getPlayerNumberForChoice(int i) throws PrismException {
+	public int getPlayerNumberForChoice(int i) {
 		return -1;
 	}
 

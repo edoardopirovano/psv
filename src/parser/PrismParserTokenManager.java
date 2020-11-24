@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import jltl2ba.SimpleLTL;
 import parser.ast.*;
+import parser.ast.Module;
 import parser.type.*;
 import prism.ModelInfo;
 import parser.visitor.*;

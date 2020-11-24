@@ -17,7 +17,7 @@ class FaultyAbstractModelGenerator extends FaultyConcreteModelGenerator {
     private final FaultFile abstractFaultFile;
     private final VarList abstractVarList = new VarList();
 
-    FaultyAbstractModelGenerator(AsyncSwarmFile sf, FaultFile ff, int index) throws PrismException {
+    FaultyAbstractModelGenerator(AsyncSwarmFile sf, FaultFile ff, List<Integer> index) throws PrismException {
         super(sf, ff, index);
         RenamedModule rm = new RenamedModule("agent", "agentAbs");
         for (Declaration decl : swarmFile.getAgents().get(0).getDeclarations()) {

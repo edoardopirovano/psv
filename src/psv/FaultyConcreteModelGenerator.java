@@ -39,10 +39,11 @@ public class FaultyConcreteModelGenerator extends DefaultModelGenerator {
     // Has the transition list been built?
     private boolean transitionListBuilt;
 
-    FaultyConcreteModelGenerator(AsyncSwarmFile swarmFile, FaultFile faultFile, int n) throws PrismException {
+    FaultyConcreteModelGenerator(AsyncSwarmFile swarmFile, FaultFile faultFile, List<Integer> numAgents) throws PrismException {
         this.swarmFile = swarmFile;
         this.faultFile = faultFile;
         Values constantValues = new Values();
+        int n = numAgents.get(0);
 
         renamedAgents = new ArrayList<>(n);
         renamedFaultFiles = new ArrayList<>(n);

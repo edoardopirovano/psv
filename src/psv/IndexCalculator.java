@@ -1,65 +1,71 @@
 package psv;
 
-import parser.ast.*;
+import parser.ast.ExpressionIdent;
+import parser.ast.ExpressionLabel;
+import parser.ast.ExpressionVar;
 import parser.visitor.ASTTraverse;
 import prism.PrismLangException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 class IndexCalculator extends ASTTraverse {
-    private int index = 1;
+    private List<Integer> index = new ArrayList<>();
 
-    private Map<String, Integer> labelValues = new HashMap<>();
+    private final Map<String, List<Integer>> labelValues = new HashMap<>();
 
-    int getIndex() {
+    List<Integer> getIndex() {
         return index;
     }
 
     @Override
-    public void visitPre(ExpressionVar e) throws PrismLangException {
+    public void visitPre(final ExpressionVar e) throws PrismLangException {
         visitVar(e.getName());
     }
 
     @Override
-    public void visitPre(ExpressionIdent e) throws PrismLangException {
+    public void visitPre(final ExpressionIdent e) throws PrismLangException {
         visitVar(e.getName());
     }
 
     @Override
-    public void visitPre(ExpressionLabel e) throws PrismLangException {
-        index(labelValues.get(e.getName()));
+    public void visitPre(final ExpressionLabel e) throws PrismLangException {
+        final List<Integer> labelIndex = labelValues.get(e.getName());
+        for (int i = 0; i < labelIndex.size(); ++i)
+            index(i, labelIndex.get(i));
     }
 
-    @Override
-    public void visitPre(ExpressionStrategy e) throws PrismLangException {
-        for (String player : e.getCoalition().getPlayers()) {
-            if (!player.equals("env"))
-                index(Integer.valueOf(player.substring(player.lastIndexOf("_") + 1)));
-        }
-    }
-
-    private void visitVar(String name) throws PrismLangException {
-        String[] splitVarName = name.split("_");
-        String agentName = splitVarName[splitVarName.length - 1];
+    private void visitVar(final String name) throws PrismLangException {
+        final String[] splitVarName = name.split("_");
+        final String agentName = splitVarName[splitVarName.length - 1];
+        if (agentName.equals("E"))
+            return;
+        final String agentType = splitVarName[splitVarName.length - 2];
         try {
-            index(Integer.parseInt(agentName) + 1);
-        } catch (NumberFormatException exception) {
-            if (!agentName.equals("env"))
-                throw new PrismLangException("Invalid identifier in formula");
+            index(Integer.parseInt(agentType), Integer.parseInt(agentName) + 1);
+        } catch (final NumberFormatException exception) {
+            throw new PrismLangException("Invalid identifier in formula");
         }
     }
 
-    private void index(int index) {
-        this.index = Math.max(this.index, index);
+    private void index(final int i, final int j) {
+        fillTo(i + 1);
+        index.set(i, Math.max(index.get(i), j));
     }
 
-    void endVisitLabel(String labelName) {
+    void endVisitLabel(final String labelName) {
         labelValues.put(labelName, index);
         reset();
     }
 
     void reset() {
-        index = 1;
+        index = new ArrayList<>();
+    }
+
+    void fillTo(final int i) {
+        while (index.size() < i)
+            index.add(0);
     }
 }
