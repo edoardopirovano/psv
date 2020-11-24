@@ -62,7 +62,7 @@ public class SyncAbstractModelGenerator extends SyncConcreteModelGenerator {
             for (final State state : stateSet) {
                 for (final Action action : abstractAgents.get(i).getActions()) {
                     if (action.getCondition().evaluateBoolean(state))
-                        possibleActions.add(action.getName() + "_" + i + "-abs");
+                        possibleActions.add(action.getName() + "_" + i + "_abs");
                 }
             }
         }

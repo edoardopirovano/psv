@@ -2,6 +2,7 @@ package psv;
 
 import parser.ast.ExpressionIdent;
 import parser.ast.ExpressionLabel;
+import parser.ast.ExpressionStrategy;
 import parser.ast.ExpressionVar;
 import parser.visitor.ASTTraverse;
 import prism.PrismLangException;
@@ -31,28 +32,36 @@ class IndexCalculator extends ASTTraverse {
     }
 
     @Override
+    public void visitPre(final ExpressionStrategy e) throws PrismLangException {
+        for (final String player : e.getCoalitionPlayers())
+            visitVar(player);
+    }
+
+    @Override
     public void visitPre(final ExpressionLabel e) throws PrismLangException {
         final List<Integer> labelIndex = labelValues.get(e.getName());
         for (int i = 0; i < labelIndex.size(); ++i)
-            index(i, labelIndex.get(i));
+            index(i + 1, labelIndex.get(i));
     }
 
     private void visitVar(final String name) throws PrismLangException {
+        if (name.equals("env"))
+            return;
         final String[] splitVarName = name.split("_");
         final String agentName = splitVarName[splitVarName.length - 1];
         if (agentName.equals("E"))
             return;
         final String agentType = splitVarName[splitVarName.length - 2];
         try {
-            index(Integer.parseInt(agentType), Integer.parseInt(agentName) + 1);
+            index(Integer.parseInt(agentType), Integer.parseInt(agentName));
         } catch (final NumberFormatException exception) {
             throw new PrismLangException("Invalid identifier in formula");
         }
     }
 
     private void index(final int i, final int j) {
-        fillTo(i + 1);
-        index.set(i, Math.max(index.get(i), j));
+        fillTo(i);
+        index.set(i - 1, Math.max(index.get(i - 1), j));
     }
 
     void endVisitLabel(final String labelName) {

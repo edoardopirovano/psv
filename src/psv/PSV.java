@@ -1,10 +1,10 @@
 package psv;
 
 import org.apache.commons.cli.*;
+import org.apache.commons.lang3.math.NumberUtils;
 import parser.PrismParser;
 import parser.ast.*;
 import prism.*;
-import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,50 +21,50 @@ public class PSV {
     private PropertiesFile pf;
     private final IndexCalculator indexCalculator = new IndexCalculator();
 
-    public static void main(String[] args) {
-        Options options = new Options();
+    public static void main(final String[] args) {
+        final Options options = new Options();
 
-        Option mode = new Option("c", "concrete", true,
+        final Option mode = new Option("c", "concrete", true,
                 "Pass a comma separated list of integers to check a concrete system of that size.");
         options.addOption(mode);
 
-        Option async = new Option("a", "async", false,
+        final Option async = new Option("a", "async", false,
                 "Check an asynchronous system (default is synchronous).");
         options.addOption(async);
 
-        Option model = new Option("s", "swarmFile", true, "Path to the swarm model file.");
+        final Option model = new Option("s", "swarmFile", true, "Path to the swarm model file.");
         model.setRequired(true);
         options.addOption(model);
 
-        Option properties = new Option("p", "propertiesFile", true, "Path to properties file.");
+        final Option properties = new Option("p", "propertiesFile", true, "Path to properties file.");
         properties.setRequired(true);
         options.addOption(properties);
 
-        Option faults = new Option("f", "faultsFile", true, "Path to a file specifying faults to inject.");
+        final Option faults = new Option("f", "faultsFile", true, "Path to a file specifying faults to inject.");
         options.addOption(faults);
 
-        Option export = new Option("e", "export", true, "Path to export DOT file of model to.");
+        final Option export = new Option("e", "export", true, "Path to export DOT file of model to.");
         options.addOption(export);
 
-        CommandLineParser parser = new DefaultParser();
-        CommandLine cmd;
+        final CommandLineParser parser = new DefaultParser();
+        final CommandLine cmd;
         try {
             cmd = parser.parse(options, args);
-        } catch (ParseException e) {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp( "psv", options );
+        } catch (final ParseException e) {
+            final HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp("psv", options);
             System.exit(1);
             throw new IllegalStateException("Parsing arguments failed.");
         }
 
         try {
             new PSV().go(cmd);
-        } catch (PrismException e) {
+        } catch (final PrismException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private void go(CommandLine cmd) throws PrismException {
+    private void go(final CommandLine cmd) throws PrismException {
         prism.initialise();
         prism.setEngine(Prism.EXPLICIT);
         if (cmd.hasOption("f")) {
@@ -77,10 +77,10 @@ public class PSV {
         else
             readInSyncSwarmFile(cmd.getOptionValue("s"));
         readInPropertiesFile(cmd.getOptionValue("p"));
-        ModelGenerator modelGenerator;
+        final ModelGenerator modelGenerator;
         if (cmd.hasOption("c")) {
-            List<Integer> numAgents = new ArrayList<>();
-            for (String n : cmd.getOptionValue("c").split(","))
+            final List<Integer> numAgents = new ArrayList<>();
+            for (final String n : cmd.getOptionValue("c").split(","))
                 numAgents.add(NumberUtils.createInteger(n));
             if (cmd.hasOption("f"))
                 modelGenerator = new FaultyConcreteModelGenerator(asyncSwarmFile, faultFile, numAgents);
@@ -89,7 +89,13 @@ public class PSV {
             else
                 modelGenerator = new SyncConcreteModelGenerator(syncSwarmFile, numAgents);
         } else {
-            processLabelList(syncSwarmFile.getLabelList());
+            if (cmd.hasOption("a")) {
+                indexCalculator.fillTo(asyncSwarmFile.getAgents().size());
+                processLabelList(asyncSwarmFile.getLabelList());
+            } else {
+                indexCalculator.fillTo(syncSwarmFile.getAgents().size());
+                processLabelList(syncSwarmFile.getLabelList());
+            }
             processLabelList(pf.getLabelList());
             for (int i = 0; i < pf.getNumProperties(); ++i)
                 pf.getPropertyObject(i).getExpression().accept(indexCalculator);
@@ -109,71 +115,71 @@ public class PSV {
             prism.modelCheck(pf, pf.getProperty(i));
     }
 
-    private void readInAsyncSwarmFile(String fileName) throws PrismLangException {
-        PrismParser parser;
+    private void readInAsyncSwarmFile(final String fileName) throws PrismLangException {
+        final PrismParser parser;
         try {
             parser = Prism.getPrismParser();
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             throw new IllegalStateException(e);
         }
-        try (FileInputStream fis = new FileInputStream(new File(fileName))) {
+        try (final FileInputStream fis = new FileInputStream(new File(fileName))) {
             asyncSwarmFile = parser.parseAsyncSwarmFile(fis);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(e);
         } finally {
             Prism.releasePrismParser();
         }
     }
 
-    private void readInFaultFile(String fileName) throws PrismLangException {
-        PrismParser parser;
+    private void readInFaultFile(final String fileName) throws PrismLangException {
+        final PrismParser parser;
         try {
             parser = Prism.getPrismParser();
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             throw new IllegalStateException(e);
         }
-        try (FileInputStream fis = new FileInputStream(new File(fileName))) {
+        try (final FileInputStream fis = new FileInputStream(new File(fileName))) {
             faultFile = parser.parseFaultFile(fis);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(e);
         } finally {
             Prism.releasePrismParser();
         }
     }
 
-    private void readInSyncSwarmFile(String fileName) throws PrismLangException {
-        PrismParser parser;
+    private void readInSyncSwarmFile(final String fileName) throws PrismLangException {
+        final PrismParser parser;
         try {
             parser = Prism.getPrismParser();
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             throw new IllegalStateException(e);
         }
-        try (FileInputStream fis = new FileInputStream(new File(fileName))) {
+        try (final FileInputStream fis = new FileInputStream(new File(fileName))) {
             syncSwarmFile = parser.parseSyncSwarmFile(fis);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(e);
         } finally {
             Prism.releasePrismParser();
         }
     }
 
-    private void readInPropertiesFile(String fileName) throws PrismLangException {
-        PrismParser parser;
+    private void readInPropertiesFile(final String fileName) throws PrismLangException {
+        final PrismParser parser;
         try {
             parser = Prism.getPrismParser();
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             throw new IllegalStateException(e);
         }
-        try (FileInputStream fis = new FileInputStream(new File(fileName))) {
+        try (final FileInputStream fis = new FileInputStream(new File(fileName))) {
             pf = parser.parsePropertiesFile(null, fis);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(e);
         } finally {
             Prism.releasePrismParser();
         }
     }
 
-    private void processLabelList(LabelList labelList) throws PrismLangException {
+    private void processLabelList(final LabelList labelList) throws PrismLangException {
         for (int i = 0; i < labelList.size(); ++i) {
             labelList.getLabel(i).accept(indexCalculator);
             indexCalculator.endVisitLabel(labelList.getLabelName(i));
