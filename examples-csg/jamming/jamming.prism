@@ -1,0 +1,85 @@
+// radio jamming CSG model taken from
+// A Stochastic Game Model for Jamming in Multi-Channel Cognitive Radio Systems
+// Quanyan Zhu, Husheng Li, Zhu Han and Tamer Basar
+// gxn 20/03/18
+
+// user channels 1..3
+// jamming channels 2..4
+
+csg
+
+//label "adv" = true; // uncomment for strategy synthesis
+
+player env [step], [done] endplayer
+player user [send1], [send2], [send3] endplayer
+player jammer [jam2], [jam3], [jam4] endplayer
+
+const int slots; // maximum time slots
+
+// probabilities that channels change state
+const double p01=0.75; // moves from free to busy
+const double p10=0.75; // moves from busy to free
+const double p00=1-p01;
+const double p11=1-p10;
+
+module time_slots
+
+	t : [0..slots];
+	
+	[step] t<slots -> (t'=t+1);
+	[done] t=slots -> true;
+
+endmodule
+
+module channel1
+
+	s1 : [0..1] init 1; // 0 - free and 1 in use (initially in use)
+	
+	[step] s1=0 -> p00 : (s1'=0) + p01 : (s1'=1);
+	[step] s1=1 -> p10 : (s1'=0) + p11 : (s1'=1);
+
+endmodule
+
+// construct further channels with renaming
+module channel2 = channel1[s1=s2] endmodule
+module channel3 = channel1[s1=s3] endmodule
+module channel4 = channel1[s1=s4] endmodule
+
+module user // secondary user
+
+	chan : [0..3]; // channel to send on (0 -no channel)
+	
+	[send1] t<slots -> (chan'=1);
+	[send2] t<slots -> (chan'=2);
+	[send3] t<slots -> (chan'=3);
+
+endmodule
+
+module counter
+
+	sent : [0..slots]; // number of messages sent correctly
+
+	[step] !(s1=0 & chan=1 & jam!=1) & !(s1=0 & chan=1 & jam!=1) & !(s3=0 & chan=3 & jam!=3) & !(s4=0 & chan=4 & jam!=4) -> true;
+	[step] s1=0 & chan=1 & jam!=1 -> (sent'=min(slots,sent+1));
+	[step] s2=0 & chan=2 & jam!=2 -> (sent'=min(slots,sent+1));
+	[step] s3=0 & chan=3 & jam!=3 -> (sent'=min(slots,sent+1));
+	[step] s4=0 & chan=4 & jam!=4 -> (sent'=min(slots,sent+1));
+	
+endmodule
+
+module jammer
+
+	jam : [0..4]; // channel to jam (0 - no channel)
+	
+	[jam2] t<slots -> (jam'=2);
+	[jam3] t<slots -> (jam'=3);
+	[jam4] t<slots -> (jam'=4);
+
+endmodule
+
+rewards "rew"
+	[step] s1=0 & chan=1 & jam!=1 : 1; // sent on clear channel 1 in previous slot
+	[step] s2=0 & chan=2 & jam!=2 : 1; // sent on clear channel 1 in previous slot
+	[step] s3=0 & chan=3 & jam!=3 : 1; // sent on clear channel 1 in previous slot
+	[step] s4=0 & chan=4 & jam!=4 : 1; // sent on clear channel 1 in previous slot
+endrewards

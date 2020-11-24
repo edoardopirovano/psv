@@ -1,0 +1,94 @@
+csg
+
+//label "adv" = true;
+
+player p0
+	[play], [check]
+endplayer
+
+player p1
+	[r1], [p1], [s1]
+endplayer
+
+player p2
+	[r2], [p2], [s2]
+endplayer
+
+player p3
+	[r3], [p3], [s3]
+endplayer
+
+module m
+	s : [0..2];
+	[play] (s=0) -> (s'=1);
+	[check] (s=1) -> (s'=2);
+endmodule
+
+module m1
+	a1 : [0..2];
+	[r1] (s=0) -> (a1'=0); //rock 
+	[p1] (s=0) -> (a1'=1); //paper	
+	[s1] (s=0) -> (a1'=2); //scissors
+	[check] (s=1) -> (a1'=0);
+endmodule
+
+module m2
+	a2 : [0..2];
+	[r2] (s=0) -> (a2'=0); //rock	
+	[p2] (s=0) -> (a2'=1); //paper	
+	[s2] (s=0) -> (a2'=2); //scissors
+	[check] (s=1) -> (a2'=0);
+endmodule
+
+module m3
+	a3 : [0..2];
+	[r3] (s=0) -> (a3'=0); //rock	
+	[p3] (s=0) -> (a3'=1); //paper	
+	[s3] (s=0) -> (a3'=2); //scissors
+	//[play] (s=0) -> 1/3 : (a3'=0) + 1/3 : (a3'=1) + 1/3 : (a3'=2); 
+	[check] (s=1) -> (a3'=0);
+endmodule
+
+rewards "r1_2"
+	 [check] (a1=0) & (a2=0) : 0;
+	 [check] (a1=0) & (a2=1) : -1;
+	 [check] (a1=0) & (a2=2) : 1;
+
+	 [check] (a1=1) & (a2=0) : 1;
+	 [check] (a1=1) & (a2=1) : 0;
+	 [check] (a1=1) & (a2=2) : -1;
+
+	 [check] (a1=2) & (a2=0) : -1;
+	 [check] (a1=2) & (a2=1) : 1;
+	 [check] (a1=2) & (a2=2) : 0;
+endrewards
+
+rewards "r1_3"
+	 [check] (a1=0) & (a2=0) & (a3=0) : 0;
+	 [check] (a1=0) & (a2=0) & (a3=1) : -1;
+	 [check] (a1=0) & (a2=0) & (a3=2) : 1;
+	 [check] (a1=0) & (a2=1) & (a3=0) : -1;
+	 [check] (a1=0) & (a2=1) & (a3=1) : -2;
+	 [check] (a1=0) & (a2=1) & (a3=2) : 0;
+	 [check] (a1=0) & (a2=2) & (a3=0) : 1;
+	 [check] (a1=0) & (a2=2) & (a3=1) : 0;
+	 [check] (a1=0) & (a2=2) & (a3=2) : 2;
+	 [check] (a1=1) & (a2=0) & (a3=0) : 2;
+	 [check] (a1=1) & (a2=0) & (a3=1) : 1;
+	 [check] (a1=1) & (a2=0) & (a3=2) : 0;
+	 [check] (a1=1) & (a2=1) & (a3=0) : 1;
+	 [check] (a1=1) & (a2=1) & (a3=1) : 0;
+	 [check] (a1=1) & (a2=1) & (a3=2) : -1;
+	 [check] (a1=1) & (a2=2) & (a3=0) : 0;
+	 [check] (a1=1) & (a2=2) & (a3=1) : -1;
+	 [check] (a1=1) & (a2=2) & (a3=2) : -2;
+	 [check] (a1=2) & (a2=0) & (a3=0) : -2;
+	 [check] (a1=2) & (a2=0) & (a3=1) : 0;
+	 [check] (a1=2) & (a2=0) & (a3=2) : -1;
+	 [check] (a1=2) & (a2=1) & (a3=0) : 0;
+	 [check] (a1=2) & (a2=1) & (a3=1) : 2;
+	 [check] (a1=2) & (a2=1) & (a3=2) : 1;
+	 [check] (a1=2) & (a2=2) & (a3=0) : -1;
+	 [check] (a1=2) & (a2=2) & (a3=1) : 1;
+	 [check] (a1=2) & (a2=2) & (a3=2) : 0;
+endrewards

@@ -1,0 +1,7 @@
+// each players want to maximise the expected number of messages sent in k steps
+<<p1>> N=?[ R{"r1","r2"}[C<=k,C<=k]  ]
+
+// each players want to maximise the expected number of messages sent in k steps
+// now player 2 is in the first coalition (will give the same result)
+<<p2>> N=?[ R{"r2","r1"}[C<=k,C<=k]  ]
+

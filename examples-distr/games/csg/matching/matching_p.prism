@@ -1,0 +1,56 @@
+csg
+
+player p0
+	[play], [move]
+endplayer
+
+player p1
+	//[c1], [d1]
+	[a1]
+endplayer
+
+player p2
+	//[c2], [d2]
+	[a2]
+endplayer
+
+const double p1;
+const double p2;
+
+module m0
+	s : [0..1] init 0;
+	t : [0..1] init 0;	
+	[play] (s=0) -> (t'=1);
+	[move] (t=1) & (a1=0) & (a2=0) -> (s'=1);	
+	[move] (t=1) & (a1=0) & (a2=1) -> (s'=1);	
+	[move] (t=1) & (a1=1) & (a2=0) -> (s'=1);	
+	[move] (t=1) & (a1=1) & (a2=1) -> (s'=1);	
+endmodule
+
+module m1
+	a1 : [0..1];
+	//[c1] (s=0) -> (a1'=0); //cooperate
+	//[d1] (s=0) -> (a1'=1); //defect
+	[a1] (s=0) -> p1 : (a1'=0) + 1-p1 : (a1'=1);
+endmodule
+
+module m2
+	a2 : [0..1];
+	//[c2] (s=0) -> (a2'=0); //cooperate
+	//[d2] (s=0) -> (a2'=1); //defect
+	[a2] (s=0) -> p2 : (a2'=0) + 1-p2 : (a2'=1);
+endmodule
+
+rewards "r1"
+	[move] (s=0) & (a1=0) & (a2=0) : 1; 	
+	[move] (s=0) & (a1=0) & (a2=1) : -1;	
+	[move] (s=0) & (a1=1) & (a2=0) : -1;	
+	[move] (s=0) & (a1=1) & (a2=1) : 1;	
+endrewards
+
+rewards "r2"
+	[move] (s=0) & (a1=0) & (a2=0) : -1; 	
+	[move] (s=0) & (a1=0) & (a2=1) : 1;	
+	[move] (s=0) & (a1=1) & (a2=0) : 1;	
+	[move] (s=0) & (a1=1) & (a2=1) : -1;	
+endrewards

@@ -1,0 +1,42 @@
+csg
+
+player p1
+	[a], [b], [c]
+endplayer
+
+player p2
+	[d], [e], [f]
+endplayer
+
+player p3
+	[g], [h]
+endplayer
+
+module m1
+	s : [0..2] init 0;
+	[a] (s=0) -> 1/2 : (s'=1) + 1/2 : (s'=2);
+	[b] (s=0) -> (s'=1);
+	[c] (s!=0) -> true;
+endmodule
+
+module m2
+	t : [3..5] init 3;
+	[d] (t=3) -> (t'=4);
+	[e] (t=3) -> (t'=5);
+	[f] (t!=3) -> true;
+endmodule
+
+module m3
+	u : [6..8] init 6;
+	[g] (u=6) -> (u'=7);
+	[h] (u=6) -> (u'=8);
+endmodule
+
+formula p__a__d = (s=0 & t=3) ? 1 : 0; //rewards for pair of actions a,d
+formula p__a__e = (s=0 & t=3) ? 1 : 0;
+formula p__b__d = (s=0 & t=3) ? 2 : 0;
+formula p__b__e = (s=0 & t=3) ? 2 : 0;
+
+rewards "r1"
+	(s=0) : 2;
+endrewards	

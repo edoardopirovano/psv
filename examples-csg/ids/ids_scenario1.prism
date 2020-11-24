@@ -1,0 +1,114 @@
+// intrusion detection CSG model taken from
+// Dynamic Policy-Based IDS Configuration 
+// Quanyan Zhu and Tamer Basar
+// gxn 20/03/18
+
+// scenario 1 where:
+// - failure state added to the computer system
+// - small chance an attack is successful
+// - high chance of recovering to healthy if attack is prevented
+// - small chance of failure from compromised state (if attack continues)
+// - high change that we repair from failure to compromised when attack stops
+
+const double attack = 0.2;
+const double recover = 0.8;
+const double fail = 0.2;
+const double repair = 0.8;
+
+csg
+// label "adv" = true; // uncomment for strategy synthesis 
+
+player turn [turn] endplayer
+player csystem [step] endplayer
+player policy [defend1], [defend2] endplayer
+player attacker [attack1], [attack2] endplayer
+
+const int rounds; // number of rounds
+
+module turn
+
+	turn : [0..1];
+	// 0 - attack and defence chosen
+	// 1 - system evolves (time passes)
+	r : [0..rounds]; // current time-step
+	
+	[turn] turn=0 & r<rounds -> (turn'=1);
+	[turn] turn=1 -> (turn'=0) & (r'=r+1);
+	[turn] turn=0 & r=rounds -> true; // loop when finished
+	
+endmodule
+
+module csystem
+
+	s : [1..3]; // system state
+	// 1 - healthy
+	// 2 - compromised
+	// 3 - failure
+	
+	[step] turn=1 & s=1 & l=1 & a=1 -> (s'=1);
+	[step] turn=1 & s=1 & l=1 & a=2 -> 1-attack : (s'=1) + attack : (s'=2);
+	[step] turn=1 & s=1 & l=2 & a=1 -> 1-attack : (s'=1) + attack : (s'=2);
+	[step] turn=1 & s=1 & l=2 & a=2 -> (s'=1);
+
+	[step] turn=1 & s=2 & l=1 & a=1 -> recover : (s'=1) + 1-recover : (s'=2);
+	[step] turn=1 & s=2 & l=1 & a=2 -> 1-fail : (s'=2) + fail : (s'=3);
+	[step] turn=1 & s=2 & l=2 & a=1 -> 1-fail : (s'=2) + fail : (s'=3);
+	[step] turn=1 & s=2 & l=2 & a=2 -> recover : (s'=1) + 1-recover : (s'=2);
+
+	[step] turn=1 & s=3 & l=1 & a=1 -> repair : (s'=2) + 1-repair : (s'=3);
+	[step] turn=1 & s=3 & l=1 & a=2 -> (s'=3);
+	[step] turn=1 & s=3 & l=2 & a=1 -> (s'=3);
+	[step] turn=1 & s=3 & l=2 & a=2 -> repair : (s'=2) + 1-repair : (s'=3);
+
+endmodule
+
+module policy
+
+	l : [0..2]; // current library in use (0 no library)
+	// 1 - successful against attack 1
+	// 2 - successful against attack 2
+																																																						
+	[defend1] turn=0 & r<rounds -> (l'=1);
+	[defend2] turn=0 & r<rounds -> (l'=2);
+	
+endmodule
+
+module attacker
+
+	a : [0..2]; // current attack (0 no attack)
+	
+	[attack1] turn=0 & r<rounds -> (a'=1);
+	[attack2] turn=0 & r<rounds -> (a'=2);
+
+endmodule
+
+rewards "damage"
+	[step] s=1 & l=1 & a=1 : 0;
+	[step] s=1 & l=1 & a=2 : 1;
+	[step] s=1 & l=2 & a=1 : 0.5;
+	[step] s=1 & l=2 & a=2 : 0;
+	[step] s=2 & l=1 & a=1 : 1;
+	[step] s=2 & l=1 & a=2 : 2;
+	[step] s=2 & l=2 & a=1 : 1.5;
+	[step] s=2 & l=2 & a=2 : 1;
+	[step] s=3 & l=1 & a=1 : 1;
+	[step] s=3 & l=1 & a=2 : 3;
+	[step] s=3 & l=2 & a=1 : 2.5;
+	[step] s=3 & l=2 & a=2 : 1;
+endrewards	
+
+rewards "i_damage"
+	s=1 & l=1 & a=1 : 0;
+	s=1 & l=1 & a=2 : 1;
+	s=1 & l=2 & a=1 : 0.5;
+	s=1 & l=2 & a=2 : 0;
+	s=2 & l=1 & a=1 : 1;
+	s=2 & l=1 & a=2 : 2;
+	s=2 & l=2 & a=1 : 1.5;
+	s=2 & l=2 & a=2 : 1;
+	s=3 & l=1 & a=1 : 1;
+	s=3 & l=1 & a=2 : 3;
+	s=3 & l=2 & a=1 : 2.5;
+	s=3 & l=2 & a=2 : 1;
+endrewards	
+

@@ -1,0 +1,62 @@
+stpg
+
+label "csg" = true;
+
+player p1
+	[a], [b]
+endplayer
+
+player p2
+	[c], [d]
+endplayer
+
+player p3
+	[e], [f]
+endplayer
+
+//module m1
+//	s : [0..1] init 0;
+//	[a] true -> (s'=0);
+	//[a] (s=0) -> (s'=0);
+//	[a] true -> (s'=1);
+	//[a] (s=0) -> (s'=1);
+//	[b] true -> (s'=1);
+	//[b] (s=0) -> (s'=1);
+//endmodule 
+
+//module m2
+//	t : [0..1] init 0;
+//	u : [0..1] init 0;
+//	[a] true -> (u'=1);
+	//[a] (s=0) -> (u'=1);
+//	[a] true -> (u'=0);
+	//[a] (s=0) -> (u'=0);
+//	[c] true -> (t'=0);
+	//[c] (s=1) -> (t'=0);
+//	[d] true -> (t'=1);
+	//[d] (s=1) -> (t'=1);
+//endmodule
+
+module m1
+	//b : bool init false;
+	//c : bool init false;
+	s : [0..1] init 0;
+	t : [0..1] init 0;
+	u : [0..1] init 0;
+	[a] true -> (s'=0); // & (b'=true);
+	//[a] (s=0) -> (s'=0);
+	[a] true -> (s'=1);
+	//[a] (s=0) -> (s'=1);
+	[b] true -> (s'=1);
+	//[b] (s=0) -> (s'=1);
+	//[a] true -> (u'=1);
+	//[a] (s=0) -> (u'=1);
+	//[a] true -> (u'=0);
+	//[a] (s=0) -> (u'=0);
+	[c] true -> 0.5 : (t'=0) + 0.5 : (t'=1);
+	//[c] (s=1) -> (t'=0);
+	[d] true -> (t'=1);
+	//[d] (s=1) -> (t'=1);
+	[e] true -> (u'=0); // & (c'=false);
+	[f] true -> (u'=1);
+endmodule

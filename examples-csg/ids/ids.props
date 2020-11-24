@@ -1,0 +1,11 @@
+// minimum cumulative expected damage the IDS policy can enforce
+<<policy>> R{"damage"}min=? [ C ]
+
+const int K;
+// minimum expected damage the IDS policy can enforce in round K
+<<policy>> R{"i_damage"}min=? [ I=(K*2-1) ]
+
+// minimum expected damage when collaborating with the attacker
+<<policy,attacker>> R{"damage"}min=? [ C ]
+<<policy>> R{"i_damage"}min=? [ I=(rounds*2-1) ]
+// (just a check as both should be 0)

@@ -1,0 +1,10 @@
+// both players maximise the expected reward before their battery becomes empty
+<<p1>> N=?[ R{"r1","r2"}[(F e1=0),(F e2=0)] ]
+
+// both players maximise the expected reward in the first k steps
+<<p1>> N=?[ R{"r1","r2"}[C<=k,C<=k] ]
+
+// both players maximise the probability theirn battery becomes empty
+// should be 1+1=2
+<<p1>> N=?[ P[(F e1=0),(F e2=0)] ]
+

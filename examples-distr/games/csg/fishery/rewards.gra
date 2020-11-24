@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE chartFormat SYSTEM "chartformat.dtd">
+<chartFormat graphTitle="" legendFontColourB="0" legendFontColourG="0" legendFontColourR="0" legendFontName="SansSerif" legendFontSize="11" legendFontStyle="0" legendPosition="right" legendVisible="true" titleFontColourB="0" titleFontColourG="0" titleFontColourR="0" titleFontName="SansSerif" titleFontSize="14" titleFontStyle="0" versionString="4.4.dev">
+<layout/>
+<axis autoscale="true" heading="nrounds" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
+<axis autoscale="true" heading="Result" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="255" seriesColourG="0" seriesColourR="0" seriesHeading="&lt;&lt;p1&gt;&gt; max" seriesShape="circle" showLines="true" showPoints="true">
+<point x="1.0" y="10.000000000000002"/>
+<point x="2.0" y="18.8"/>
+<point x="3.0" y="26.58"/>
+<point x="4.0" y="33.833999999999996"/>
+<point x="5.0" y="40.8964"/>
+<point x="6.0" y="47.899820000000005"/>
+<point x="7.0" y="54.887162"/>
+<point x="8.0" y="61.87059359999999"/>
+<point x="9.0" y="68.85319545996799"/>
+<point x="10.0" y="75.83565617792"/>
+<point x="11.0" y="82.818104406784"/>
+<point x="12.0" y="89.80055627097602"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="127" seriesColourR="0" seriesHeading="&lt;&lt;p2&gt;&gt; max" seriesShape="square" showLines="true" showPoints="true">
+<point x="1.0" y="9.000000000000002"/>
+<point x="2.0" y="15.6"/>
+<point x="3.0" y="20.64"/>
+<point x="4.0" y="24.756"/>
+<point x="5.0" y="28.362400000000008"/>
+<point x="6.0" y="31.712959999999992"/>
+<point x="7.0" y="34.945584"/>
+<point x="8.0" y="38.1263536"/>
+<point x="9.0" y="41.28497744"/>
+<point x="10.0" y="44.434321776000004"/>
+<point x="11.0" y="47.5798279504"/>
+<point x="12.0" y="50.723760952192"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="0" seriesColourR="255" seriesHeading="&lt;&lt;p1&gt;&gt; min" seriesShape="triangle" showLines="true" showPoints="true">
+<point x="1.0" y="7.999999999999998"/>
+<point x="2.0" y="15.799999999999999"/>
+<point x="3.0" y="23.4"/>
+<point x="4.0" y="30.86"/>
+<point x="5.0" y="38.22"/>
+<point x="6.0" y="45.504799999999996"/>
+<point x="7.0" y="52.73136000000001"/>
+<point x="8.0" y="59.912096000000005"/>
+<point x="9.0" y="67.05647999999998"/>
+<point x="10.0" y="74.17190527999999"/>
+<point x="11.0" y="81.26421273600002"/>
+<point x="12.0" y="88.33804559360001"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="191" seriesColourR="0" seriesHeading="&lt;&lt;p2&gt;&gt; min" seriesShape="rectangle_h" showLines="true" showPoints="true">
+<point x="1.0" y="6.000000000000001"/>
+<point x="2.0" y="11.6"/>
+<point x="3.0" y="16.88"/>
+<point x="4.0" y="21.944"/>
+<point x="5.0" y="26.867199999999997"/>
+<point x="6.0" y="31.69936"/>
+<point x="7.0" y="36.472768"/>
+<point x="8.0" y="41.2082784"/>
+<point x="9.0" y="45.91934592"/>
+<point x="10.0" y="50.614648896"/>
+<point x="11.0" y="55.299784524799996"/>
+<point x="12.0" y="59.97836273024001"/>
+</graph>
+</chartFormat>

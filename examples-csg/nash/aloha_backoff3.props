@@ -1,0 +1,10 @@
+// probability player 1 eventually sends a packet
+// and player two and three form a coalition to send two packets
+<<p1>> N=?[ P[(F s1=3),(F s2=3 & s3=3)]  ] 
+// should be 1.0+1.0=2.0 as can collaborate
+// i.e. first one sends and then the other does afterwards as no time bound
+
+// probability player 1 eventually sends a packet within a time bound
+// and player two and three form a coalition to send two packets within a time bound
+<<p1>> N=?[ P[(F s1=3 & t<=tmax),(F s2=3 & s3=3 & t<=tmax)]  ]
+

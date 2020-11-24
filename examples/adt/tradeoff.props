@@ -1,0 +1,10 @@
+
+<<a>> Pmax=? [ F "success" ]
+
+<<a>> Rmin=? [ F s2>0 ]
+<<a>> Rmax=? [ F s2>0 ]
+
+<<a>> (R{"cost"}<=12[C] & R{"success"}>=0.09[C])
+
+
+

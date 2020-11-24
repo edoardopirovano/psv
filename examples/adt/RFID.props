@@ -1,0 +1,8 @@
+<<a>> Pmax=? [ F "success" ]
+
+<<a>> (R{"cost"}<=150 [ C ]&R{"success"}>=0.01 [ C ])
+
+<<a>> R{"cost"}min=? [ F "end" ]
+
+<<a>> R{"success"}max=? [ F "end" ]
+

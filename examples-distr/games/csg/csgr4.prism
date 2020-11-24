@@ -1,0 +1,39 @@
+csg
+
+player p1
+	[a], [b]
+endplayer
+
+player p2
+	[c], [d]
+endplayer
+
+player p3
+	[e]//, [f]
+endplayer
+
+const int p;
+
+module m1
+	s : [0..2];
+	[a] (s=0) & (t!=0) -> (s'=1);
+	[b] (s=0) & (t!=0) -> (1-mod(p,10)/10) : (s'=0) + mod(p,10)/10 : (s'=2);
+endmodule
+
+module m2
+	t : [0..3];
+	[c] (t=0) -> 1/2 : (t'=1) + 1/2 : (t'=2);
+	[d] (t!=0 & t!=3) -> (1-mod(p,10)/10) : (t'=0) + mod(p,10)/10 : (t'=3);
+endmodule
+
+module m3
+	u : [0..1];
+	[e] (s=2) & (t=2) -> 8/9 : (u'=1) + 1/9 : true;
+	//[f] (t=3) -> true;
+endmodule
+
+rewards "r1"
+	(s=2) & (t=2) & (u=0) : mod(p,10);
+endrewards
+
+//formula p_e_d = ((s=2) & (t=2) & (u=0)) ? 1 : 0;

@@ -1,0 +1,16 @@
+<<investor1>> Pmax=? [ F (i1=2&v>5) ]
+
+<<investor1>> Rmax=? [ C ]
+
+<<investor2>> Pmax=? [ F (i2=2&v>5) ]
+
+<<investor2>> Rmax=? [ C ]
+
+<<investor1,investor2>> Pmax=? [ F (i1=2&i2=2&v>5) ]
+
+<<investor1,investor2>> Rmax=? [ C ]
+
+<<investor1,market1,market2,market3>> Rmax=? [ C ]
+
+<<investor2,market1,market2,market3>> Rmax=? [ C ]
+

@@ -1,0 +1,40 @@
+agent
+	transmitted : bool init false;
+	
+	[transmit0] (transmitted=false);
+	[transmit1] (transmitted=false);
+	[transmit2] (transmitted=false);
+	[transmit3] (transmitted=false);
+	
+	[transmit] (transmitted=true);
+	
+	[block0] true;
+	[block1] true;
+	[block2] true;
+	[block3] true;
+	
+	update
+		(transmit0, true, !{block0}) -> 0.4:(transmitted'=true);
+		(transmit0, true, {block0}) -> 0.1:(transmitted'=true);
+		(transmit1, true, !{block1}) -> 0.4:(transmitted'=true);
+		(transmit1, true, {block1}) -> 0.1:(transmitted'=true);
+		(transmit2, true, !{block2}) -> 0.4:(transmitted'=true);
+		(transmit2, true, {block2}) -> 0.1:(transmitted'=true);
+		(transmit3, true, !{block3}) -> 0.4:(transmitted'=true);
+		(transmit3, true, {block3}) -> 0.1:(transmitted'=true);
+		
+		(transmit, true, {}) -> 1.0:(transmitted'=false);
+	endupdate
+endagent
+
+environment
+	received : [0..3] init 0;
+	
+	[receive] true;
+	
+	update
+		(receive, received<3, {transmit}) -> 1.0:(received'=received+1);
+	endupdate
+endenvironment
+
+label "receivedAll" = received_env=3;

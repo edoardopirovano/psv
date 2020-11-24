@@ -1,0 +1,29 @@
+stpg
+
+label "csg" = true;
+
+player p1
+	[a], [b], [c]
+endplayer
+
+player p2
+	[d], [e], [f]
+endplayer
+
+module m1
+	s : [0..2] init 0;
+	[a] (s=0) -> (s'=1);
+	[b] true -> (s'=2);
+	[c] (s=1) -> (s'=2);
+endmodule
+
+module m2
+	t : [0..2] init 0;
+	[d] (t=0) -> (t'=1);
+	[e] true -> (t'=2);
+	[f] (t=1) -> (t'=2);
+endmodule
+
+//rewards "r1"
+//[a][b] (s=0) : p1 <- 1 & p2 <- 2; 
+//endrewards

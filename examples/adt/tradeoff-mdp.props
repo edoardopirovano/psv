@@ -1,0 +1,14 @@
+const double p;
+
+Pmax=? [ F "success" ]
+
+Rmin=? [ F s2>0 ]
+
+Rmax=? [ F s2>0 ]
+
+multi(Rmin=? [ C ], P>=0.0009 [ F "success" ])
+
+multi(Rmin=? [ C ], Pmax=? [ F "success" ])
+
+multi(Rmin=? [ C ], P>=p [ F "success" ])
+

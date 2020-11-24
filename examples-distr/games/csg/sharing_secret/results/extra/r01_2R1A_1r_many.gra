@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE chartFormat SYSTEM "chartformat.dtd">
+<chartFormat graphTitle="pall=-2.0" legendFontColourB="0" legendFontColourG="0" legendFontColourR="0" legendFontName="SansSerif" legendFontSize="11" legendFontStyle="0" legendPosition="right" legendVisible="true" titleFontColourB="0" titleFontColourG="0" titleFontColourR="0" titleFontName="SansSerif" titleFontSize="14" titleFontStyle="0" versionString="4.4.dev">
+<layout/>
+<axis autoscale="true" heading="ponly" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
+<axis autoscale="true" heading="Result" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="255" seriesColourG="0" seriesColourR="0" seriesHeading="pall=-2,pnone=-0.2" seriesShape="circle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.48125000000027307"/>
+<point x="-2.0" y="-0.4812499999997759"/>
+<point x="-1.0" y="-0.2624999999999157"/>
+<point x="0.0" y="-0.08750000000001384"/>
+<point x="1.0" y="-0.08749999999999998"/>
+<point x="2.0" y="-0.0875"/>
+<point x="3.0" y="-0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="127" seriesColourR="0" seriesHeading="pall=-1,pnone=-0.2" seriesShape="square" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.2625000000001364"/>
+<point x="-2.0" y="-0.26249999999988793"/>
+<point x="-1.0" y="-0.2624999999999794"/>
+<point x="0.0" y="-0.08749999999998707"/>
+<point x="1.0" y="-0.0875"/>
+<point x="2.0" y="-0.0875"/>
+<point x="3.0" y="-0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="0" seriesColourR="255" seriesHeading="pall=0,pnone=-0.2" seriesShape="triangle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.21644736842107531"/>
+<point x="-2.0" y="-0.19999999999997714"/>
+<point x="-1.0" y="-0.1652777777777727"/>
+<point x="0.0" y="-0.08750000000000549"/>
+<point x="1.0" y="-0.0875"/>
+<point x="2.0" y="-0.0875"/>
+<point x="3.0" y="-0.08749999999999998"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="191" seriesColourR="0" seriesHeading="pall=1,pnone=-0.2" seriesShape="rectangle_h" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.18958333333334854"/>
+<point x="-2.0" y="-0.1703947368420916"/>
+<point x="-1.0" y="-0.1374999999999975"/>
+<point x="0.0" y="-0.08749999999998707"/>
+<point x="1.0" y="-0.0875"/>
+<point x="2.0" y="-0.0875"/>
+<point x="3.0" y="-0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="0" seriesColourR="191" seriesHeading="pall=2,pnone=-0.2" seriesShape="rectangle_v" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.17198275862070064"/>
+<point x="-2.0" y="-0.15312499999999069"/>
+<point x="-1.0" y="-0.12434210526315131"/>
+<point x="0.0" y="-0.08750000000001384"/>
+<point x="1.0" y="-0.08749999999999998"/>
+<point x="2.0" y="-0.0875"/>
+<point x="3.0" y="-0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="191" seriesColourR="191" seriesHeading="pall=-2,pnone=-0.1" seriesShape="circle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.4593750000001328"/>
+<point x="-2.0" y="-0.45937499999995884"/>
+<point x="-1.0" y="-0.2406250000001436"/>
+<point x="0.0" y="-0.04375000000000365"/>
+<point x="1.0" y="-0.04375"/>
+<point x="2.0" y="-0.04375"/>
+<point x="3.0" y="-0.04374999999999999"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="51" seriesColourR="153" seriesHeading="pall=-1,pnone=-0.1" seriesShape="square" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.2406250000000664"/>
+<point x="-2.0" y="-0.24062499999997936"/>
+<point x="-1.0" y="-0.24062499999988793"/>
+<point x="0.0" y="-0.04375000000001213"/>
+<point x="1.0" y="-0.04375"/>
+<point x="2.0" y="-0.04375"/>
+<point x="3.0" y="-0.04374999999999999"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="255" seriesColourG="0" seriesColourR="0" seriesHeading="pall=0,pnone=-0.1" seriesShape="triangle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.19014423076924258"/>
+<point x="-2.0" y="-0.17273706896551283"/>
+<point x="-1.0" y="-0.13700657894734042"/>
+<point x="0.0" y="-0.04374999999998526"/>
+<point x="1.0" y="-0.04375"/>
+<point x="2.0" y="-0.04375"/>
+<point x="3.0" y="-0.04375"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="127" seriesColourR="0" seriesHeading="pall=1,pnone=-0.1" seriesShape="rectangle_h" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.16026785714286484"/>
+<point x="-2.0" y="-0.139663461538459"/>
+<point x="-1.0" y="-0.1048491379310213"/>
+<point x="0.0" y="-0.04375000000001213"/>
+<point x="1.0" y="-0.04375"/>
+<point x="2.0" y="-0.04375"/>
+<point x="3.0" y="-0.04374999999999999"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="0" seriesColourR="255" seriesHeading="pall=2,pnone=-0.1" seriesShape="rectangle_v" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.14051906779661566"/>
+<point x="-2.0" y="-0.12008928571428398"/>
+<point x="-1.0" y="-0.08918269230770251"/>
+<point x="0.0" y="-0.04375000000000365"/>
+<point x="1.0" y="-0.04375"/>
+<point x="2.0" y="-0.04375"/>
+<point x="3.0" y="-0.04374999999999999"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="191" seriesColourR="0" seriesHeading="pall=-2,pnone=0" seriesShape="circle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.4375000000002812"/>
+<point x="-2.0" y="-0.4374999999997201"/>
+<point x="-1.0" y="-0.21874999999986006"/>
+<point x="0.0" y="0.0"/>
+<point x="1.0" y="0.0"/>
+<point x="2.0" y="0.0"/>
+<point x="3.0" y="0.0"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="0" seriesColourR="191" seriesHeading="pall=-1,pnone=0" seriesShape="square" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.21875000000004696"/>
+<point x="-2.0" y="-0.21875"/>
+<point x="-1.0" y="-0.21875"/>
+<point x="0.0" y="0.0"/>
+<point x="1.0" y="0.0"/>
+<point x="2.0" y="0.0"/>
+<point x="3.0" y="0.0"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="191" seriesColourR="191" seriesHeading="pall=0,pnone=0" seriesShape="triangle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.1640625000000264"/>
+<point x="-2.0" y="-0.14583333333334061"/>
+<point x="-1.0" y="-0.109375"/>
+<point x="0.0" y="0.0"/>
+<point x="1.0" y="0.0"/>
+<point x="2.0" y="0.0"/>
+<point x="3.0" y="0.0"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="51" seriesColourR="153" seriesHeading="pall=1,pnone=0" seriesShape="rectangle_h" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.1312500000000169"/>
+<point x="-2.0" y="-0.10937500000000411"/>
+<point x="-1.0" y="-0.07291666666666666"/>
+<point x="0.0" y="0.0"/>
+<point x="1.0" y="0.0"/>
+<point x="2.0" y="0.0"/>
+<point x="3.0" y="0.0"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="255" seriesColourG="0" seriesColourR="0" seriesHeading="pall=2,pnone=0" seriesShape="rectangle_v" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.10937500000001169"/>
+<point x="-2.0" y="-0.08749999999998881"/>
+<point x="-1.0" y="-0.05468749999999126"/>
+<point x="0.0" y="0.0"/>
+<point x="1.0" y="0.0"/>
+<point x="2.0" y="0.0"/>
+<point x="3.0" y="0.0"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="127" seriesColourR="0" seriesHeading="pall=-2,pnone=0.1" seriesShape="circle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.4156250000001327"/>
+<point x="-2.0" y="-0.41562499999995883"/>
+<point x="-1.0" y="-0.19687500000014352"/>
+<point x="0.0" y="0.021875000000000016"/>
+<point x="1.0" y="0.04375000000000002"/>
+<point x="2.0" y="0.04375000000000002"/>
+<point x="3.0" y="0.04375000000000002"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="0" seriesColourR="255" seriesHeading="pall=-1,pnone=0.1" seriesShape="square" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.19687500000006636"/>
+<point x="-2.0" y="-0.19687499999997932"/>
+<point x="-1.0" y="-0.19687499999988783"/>
+<point x="0.0" y="0.021875000000000016"/>
+<point x="1.0" y="0.04375000000000002"/>
+<point x="2.0" y="0.04375000000000002"/>
+<point x="3.0" y="0.04375000000000002"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="191" seriesColourR="0" seriesHeading="pall=0,pnone=0.1" seriesShape="triangle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.13818597560976914"/>
+<point x="-2.0" y="-0.11925403225805978"/>
+<point x="-1.0" y="-0.0822916666666387"/>
+<point x="0.0" y="0.021875000000000016"/>
+<point x="1.0" y="0.04375000000000002"/>
+<point x="2.0" y="0.04375000000000002"/>
+<point x="3.0" y="0.043750000000000025"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="0" seriesColourR="191" seriesHeading="pall=1,pnone=0.1" seriesShape="rectangle_h" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.10251225490196887"/>
+<point x="-2.0" y="-0.07949695121950964"/>
+<point x="-1.0" y="-0.04163306451611746"/>
+<point x="0.0" y="0.032291666666666684"/>
+<point x="1.0" y="0.04375000000000002"/>
+<point x="2.0" y="0.04375000000000002"/>
+<point x="3.0" y="0.04375000000000002"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="191" seriesColourR="191" seriesHeading="pall=2,pnone=0.1" seriesShape="rectangle_v" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.07853483606557922"/>
+<point x="-2.0" y="-0.05533088235293962"/>
+<point x="-1.0" y="-0.020807926829275795"/>
+<point x="0.0" y="0.035987903225806465"/>
+<point x="1.0" y="0.04375000000000002"/>
+<point x="2.0" y="0.04375000000000002"/>
+<point x="3.0" y="0.04375000000000002"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="51" seriesColourR="153" seriesHeading="pall=-2,pnone=0.2" seriesShape="circle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.39375000000027305"/>
+<point x="-2.0" y="-0.3937499999997759"/>
+<point x="-1.0" y="-0.1749999999999157"/>
+<point x="0.0" y="0.043750000000000004"/>
+<point x="1.0" y="0.0875"/>
+<point x="2.0" y="0.0875"/>
+<point x="3.0" y="0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="255" seriesColourG="0" seriesColourR="0" seriesHeading="pall=-1,pnone=0.2" seriesShape="square" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.17500000000013646"/>
+<point x="-2.0" y="-0.1749999999998879"/>
+<point x="-1.0" y="-0.17499999999997942"/>
+<point x="0.0" y="0.043750000000000004"/>
+<point x="1.0" y="0.0875"/>
+<point x="2.0" y="0.08749999999999998"/>
+<point x="3.0" y="0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="127" seriesColourR="0" seriesHeading="pall=0,pnone=0.2" seriesShape="triangle" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.11250000000002784"/>
+<point x="-2.0" y="-0.09296874999997375"/>
+<point x="-1.0" y="-0.05568181818181308"/>
+<point x="0.0" y="0.043750000000000004"/>
+<point x="1.0" y="0.0875"/>
+<point x="2.0" y="0.0875"/>
+<point x="3.0" y="0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="0" seriesColourR="255" seriesHeading="pall=1,pnone=0.2" seriesShape="rectangle_h" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.07403846153847851"/>
+<point x="-2.0" y="-0.04999999999998628"/>
+<point x="-1.0" y="-0.010937499999998074"/>
+<point x="0.0" y="0.06363636363636364"/>
+<point x="1.0" y="0.0875"/>
+<point x="2.0" y="0.08749999999999998"/>
+<point x="3.0" y="0.0875"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="191" seriesColourG="191" seriesColourR="0" seriesHeading="pall=2,pnone=0.2" seriesShape="rectangle_v" showLines="true" showPoints="true">
+<point x="-3.0" y="-0.04798387096775302"/>
+<point x="-2.0" y="-0.023557692307684352"/>
+<point x="-1.0" y="0.012500000000003442"/>
+<point x="0.0" y="0.07109375"/>
+<point x="1.0" y="0.0875"/>
+<point x="2.0" y="0.0875"/>
+<point x="3.0" y="0.0875"/>
+</graph>
+</chartFormat>

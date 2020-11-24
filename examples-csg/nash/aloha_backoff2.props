@@ -1,0 +1,8 @@
+// probability player eventually send their packets
+<<p1>> N=?[ P[(F s1=3),(F s2=3)]  ] 
+// should be 2.0 as can collaborate
+// i.e. first one sends and then the other does afterwards
+
+// probability players send packets within a time bound
+<<p1>> N=?[ P[(F s1=3 & t<=tmax),(F s2=3 & t<=tmax)]  ]
+

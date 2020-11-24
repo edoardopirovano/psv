@@ -1,0 +1,936 @@
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:09 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=1
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=1
+
+Computing reachable states... 41 states
+Reachable states exploration and model construction done in 0.032 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.123 seconds.
+
+Warning: Deadlocks detected and fixed in 15 states
+
+Type:        CSG
+States:      41 (1 initial)
+Transitions: 64
+Choices:     50
+Max/avg:     4/1.22
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:12 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=2
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=2
+
+Computing reachable states... 98 states
+Reachable states exploration and model construction done in 0.058 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.146 seconds.
+
+Warning: Deadlocks detected and fixed in 20 states
+
+Type:        CSG
+States:      98 (1 initial)
+Transitions: 157
+Choices:     125
+Max/avg:     4/1.28
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:14 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=3
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=3
+
+Computing reachable states... 172 states
+Reachable states exploration and model construction done in 0.078 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.172 seconds.
+
+Warning: Deadlocks detected and fixed in 25 states
+
+Type:        CSG
+States:      172 (1 initial)
+Transitions: 279
+Choices:     223
+Max/avg:     4/1.30
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:16 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=4
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=4
+
+Computing reachable states... 263 states
+Reachable states exploration and model construction done in 0.102 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.197 seconds.
+
+Warning: Deadlocks detected and fixed in 30 states
+
+Type:        CSG
+States:      263 (1 initial)
+Transitions: 430
+Choices:     344
+Max/avg:     4/1.31
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:18 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=5
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=5
+
+Computing reachable states... 371 states
+Reachable states exploration and model construction done in 0.096 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.181 seconds.
+
+Warning: Deadlocks detected and fixed in 35 states
+
+Type:        CSG
+States:      371 (1 initial)
+Transitions: 610
+Choices:     488
+Max/avg:     4/1.32
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:20 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=6
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=6
+
+Computing reachable states... 496 states
+Reachable states exploration and model construction done in 0.082 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.139 seconds.
+
+Warning: Deadlocks detected and fixed in 40 states
+
+Type:        CSG
+States:      496 (1 initial)
+Transitions: 819
+Choices:     655
+Max/avg:     4/1.32
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:22 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=7
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=7
+
+Computing reachable states... 638 states
+Reachable states exploration and model construction done in 0.161 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.253 seconds.
+
+Warning: Deadlocks detected and fixed in 45 states
+
+Type:        CSG
+States:      638 (1 initial)
+Transitions: 1057
+Choices:     845
+Max/avg:     4/1.32
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:24 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=8
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=8
+
+Computing reachable states... 797 states
+Reachable states exploration and model construction done in 0.1 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.156 seconds.
+
+Warning: Deadlocks detected and fixed in 50 states
+
+Type:        CSG
+States:      797 (1 initial)
+Transitions: 1324
+Choices:     1058
+Max/avg:     4/1.33
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:26 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=9
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=9
+
+Computing reachable states... 973 states
+Reachable states exploration and model construction done in 0.144 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.24 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      973 (1 initial)
+Transitions: 1620
+Choices:     1294
+Max/avg:     4/1.33
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:28 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=10
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=10
+
+Computing reachable states... 1160 states
+Reachable states exploration and model construction done in 0.215 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.316 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      1160 (1 initial)
+Transitions: 1939
+Choices:     1547
+Max/avg:     4/1.33
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:30 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=11
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=11
+
+Computing reachable states... 1347 states
+Reachable states exploration and model construction done in 0.236 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.324 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      1347 (1 initial)
+Transitions: 2258
+Choices:     1800
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:32 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=12
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=12
+
+Computing reachable states... 1534 states
+Reachable states exploration and model construction done in 0.242 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.343 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      1534 (1 initial)
+Transitions: 2577
+Choices:     2053
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:34 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=13
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=13
+
+Computing reachable states... 1721 states
+Reachable states exploration and model construction done in 0.258 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.361 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      1721 (1 initial)
+Transitions: 2896
+Choices:     2306
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:36 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=14
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=14
+
+Computing reachable states... 1908 states
+Reachable states exploration and model construction done in 0.268 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.364 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      1908 (1 initial)
+Transitions: 3215
+Choices:     2559
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:38 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=15
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=15
+
+Computing reachable states... 2095 states
+Reachable states exploration and model construction done in 0.2 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.298 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      2095 (1 initial)
+Transitions: 3534
+Choices:     2812
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:40 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=16
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=16
+
+Computing reachable states... 2282 states
+Reachable states exploration and model construction done in 0.207 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.305 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      2282 (1 initial)
+Transitions: 3853
+Choices:     3065
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:42 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=17
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=17
+
+Computing reachable states... 2469 states
+Reachable states exploration and model construction done in 0.207 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.305 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      2469 (1 initial)
+Transitions: 4172
+Choices:     3318
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:44 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=18
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=18
+
+Computing reachable states... 2656 states
+Reachable states exploration and model construction done in 0.348 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.46 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      2656 (1 initial)
+Transitions: 4491
+Choices:     3571
+Max/avg:     4/1.34
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:47 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=19
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=19
+
+Computing reachable states... 2843 states
+Reachable states exploration and model construction done in 0.291 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.382 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      2843 (1 initial)
+Transitions: 4810
+Choices:     3824
+Max/avg:     4/1.35
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:49 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=20
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=20
+
+Computing reachable states... 3030 states
+Reachable states exploration and model construction done in 0.355 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.455 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      3030 (1 initial)
+Transitions: 5129
+Choices:     4077
+Max/avg:     4/1.35
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:51 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=21
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=21
+
+Computing reachable states... 3217 states
+Reachable states exploration and model construction done in 0.385 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.497 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      3217 (1 initial)
+Transitions: 5448
+Choices:     4330
+Max/avg:     4/1.35
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:53 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=22
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=22
+
+Computing reachable states... 3404 states
+Reachable states exploration and model construction done in 0.395 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.507 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      3404 (1 initial)
+Transitions: 5767
+Choices:     4583
+Max/avg:     4/1.35
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:55 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=23
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=23
+
+Computing reachable states... 3591 states
+Reachable states exploration and model construction done in 0.404 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.517 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      3591 (1 initial)
+Transitions: 6086
+Choices:     4836
+Max/avg:     4/1.35
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
+PRISM-games
+===========
+
+Version: 4.4.dev
+Date: Thu Feb 15 10:58:57 GMT 2018
+Memory limits: cudd=1g, java(heap)=910.5m
+Command line: prism investor_mod.prism -const nrounds=24
+
+Parsing model file "investor_mod.prism"...
+
+Type:        CSG
+Modules:     month investor1 bar value probability cap 
+Variables:   m r i b v p c 
+
+Switching to explicit engine, which supports CSGs...
+
+---------------------------------------------------------------------
+
+Building model...
+Model constants: nrounds=24
+
+Computing reachable states... 3778 states
+Reachable states exploration and model construction done in 0.352 secs.
+Sorting reachable states list...
+
+Time for model construction: 0.454 seconds.
+
+Warning: Deadlocks detected and fixed in 55 states
+
+Type:        CSG
+States:      3778 (1 initial)
+Transitions: 6405
+Choices:     5089
+Max/avg:     4/1.35
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
