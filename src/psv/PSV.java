@@ -83,9 +83,9 @@ public class PSV {
             for (final String n : cmd.getOptionValue("c").split(","))
                 numAgents.add(NumberUtils.createInteger(n));
             if (cmd.hasOption("f"))
-                modelGenerator = new FaultyConcreteModelGenerator(asyncSwarmFile, faultFile, numAgents);
+                modelGenerator = new AsyncConcreteModelGenerator(asyncSwarmFile, faultFile, numAgents);
             else if (cmd.hasOption("a"))
-                modelGenerator = new AsyncConcreteModelGenerator(asyncSwarmFile, numAgents);
+                modelGenerator = new AsyncConcreteModelGenerator(asyncSwarmFile, null, numAgents);
             else
                 modelGenerator = new SyncConcreteModelGenerator(syncSwarmFile, numAgents);
         } else {
@@ -100,9 +100,9 @@ public class PSV {
             for (int i = 0; i < pf.getNumProperties(); ++i)
                 pf.getPropertyObject(i).getExpression().accept(indexCalculator);
             if (cmd.hasOption("f"))
-                modelGenerator = new FaultyAbstractModelGenerator(asyncSwarmFile, faultFile, indexCalculator.getIndex());
+                modelGenerator = new AsyncAbstractModelGenerator(asyncSwarmFile, faultFile, indexCalculator.getIndex());
             else if (cmd.hasOption("a"))
-                modelGenerator = new AsyncAbstractModelGenerator(asyncSwarmFile, indexCalculator.getIndex());
+                modelGenerator = new AsyncAbstractModelGenerator(asyncSwarmFile, null, indexCalculator.getIndex());
             else
                 modelGenerator = new SyncAbstractModelGenerator(syncSwarmFile, indexCalculator.getIndex());
             indexCalculator.reset();

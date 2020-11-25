@@ -22,8 +22,9 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
     private final VarList varList = new VarList();
     private final LabelList labelList;
     private final List<String> labelNames;
-    private final List<List<Module>> renamedAgents;
+    final List<List<Module>> renamedAgents;
     private Module environment;
+    final FaultProvider faultProvider;
 
     // Model exploration info
 
@@ -37,13 +38,16 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
     // Has the transition list been built?
     private boolean transitionListBuilt;
 
-    AsyncConcreteModelGenerator(final AsyncSwarmFile swarmFile, final List<Integer> m) throws PrismException {
+    AsyncConcreteModelGenerator(final AsyncSwarmFile swarmFile, final FaultFile ff, final List<Integer> m) throws PrismException {
         this.swarmFile = swarmFile;
+        if (ff == null)
+            faultProvider = new FaultProvider();
+        else
+            faultProvider = new FaultFileFaultProvider(ff);
         final Values constantValues = new Values();
 
         renamedAgents = new ArrayList<>();
         for (int i = 0; i < m.size(); ++i) {
-            final List<Module> renamed = new ArrayList<>();
             for (int j = 0; j < m.get(i); ++j) {
                 final RenamedModule rm = new RenamedModule("agent", "agent_" + i + "_" + j);
                 for (final Declaration decl : swarmFile.getAgents().get(i).getDeclarations()) {
@@ -52,11 +56,13 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
                     varList.addVar(declarationCopy, 0, constantValues);
                     rm.addRename(decl.getName(), declarationCopy.getName());
                 }
+                if (renamedAgents.size() == i)
+                    renamedAgents.add(new ArrayList<>());
                 Module agentCopy = (Module) swarmFile.getAgents().get(i).deepCopy();
                 agentCopy = (Module) agentCopy.rename(rm);
-                renamed.add(agentCopy);
+                renamedAgents.get(i).add(agentCopy);
+                faultProvider.introduceConcrete(rm, i);
             }
-            renamedAgents.add(renamed);
         }
         final RenamedModule rm = new RenamedModule("environment", "environment");
         for (final Declaration decl : swarmFile.getEnvironment().getDeclarations()) {
@@ -232,10 +238,10 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
         for (final Command command : environment.getCommands()) {
             if (command.getGuard().evaluateBoolean(exploreState)) {
                 if (swarmFile.getActionTypes().getGs().contains(command.getSynch())) {
-                    enabledGs.put(command.getSynch(), getChoice(command, exploreState, -2, 0));
+                    enabledGs.put(command.getSynch(), faultProvider.getChoice(command, exploreState, -2, 0));
                 } else if (swarmFile.getActionTypes().getA().contains(command.getSynch())) {
                     actionNames.add("(" + command.getSynch() + ", E)");
-                    transitionList.add(getChoice(command, exploreState, -1, 0));
+                    transitionList.add(faultProvider.getChoice(command, exploreState, -1, 0));
                 } else if (!swarmFile.getActionTypes().getAe().contains(command.getSynch())) {
                     throw new PrismException("Action " + command.getSynch() + " was not declared as A, AE or GS.");
                 }
@@ -248,14 +254,14 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
                 for (final Command command : agent.getCommands()) {
                     if (command.getGuard().evaluateBoolean(exploreState)) {
                         final String act = command.getSynch();
-                        final ChoiceListFlexi choice = getChoice(command, exploreState, i, j);
+                        final ChoiceListFlexi choice = faultProvider.getChoice(command, exploreState, i, j);
                         if (swarmFile.getActionTypes().getA().contains(act)) {
                             actionNames.add("(" + act + ", (" + i + "," + j + "))");
                             transitionList.add(choice);
                         } else if (swarmFile.getActionTypes().getAe().contains(act)) {
                             final Command matchingEnv = getMatchingEnvironmentCommand(act);
                             if (matchingEnv != null) {
-                                final ChoiceListFlexi envChoice = getChoice(matchingEnv, exploreState, -1, 0);
+                                final ChoiceListFlexi envChoice = faultProvider.getChoice(matchingEnv, exploreState, -1, 0);
                                 choice.productWith(envChoice);
                                 actionNames.add("(" + act + ", (" + i + "," + j + "))");
                                 transitionList.add(choice);
@@ -284,16 +290,6 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
         }
         for (final String act : toRemove)
             enabledGs.remove(act);
-    }
-
-    ChoiceListFlexi getChoice(final Command command, final State exploreState, final int agentType, final int agent) throws PrismLangException {
-        final ChoiceListFlexi choice = new ChoiceListFlexi();
-        for (int i = 0; i < command.getUpdates().getNumUpdates(); ++i) {
-            final ArrayList<Update> list = new ArrayList<>();
-            list.add(command.getUpdates().getUpdate(i));
-            choice.add(command.getUpdates().getProbabilityInState(i, exploreState), list);
-        }
-        return choice;
     }
 
     Command getMatchingEnvironmentCommand(final String actionName) throws PrismLangException {

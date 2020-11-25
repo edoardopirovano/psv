@@ -8,7 +8,6 @@ import parser.ast.*;
 import parser.type.Type;
 import parser.visitor.FindAllVars;
 import prism.PrismException;
-import prism.PrismLangException;
 import simulator.ChoiceListFlexi;
 
 import java.util.*;
@@ -17,8 +16,8 @@ class AsyncAbstractModelGenerator extends AsyncConcreteModelGenerator {
     private final List<Module> abstractAgents = new ArrayList<>();
     private final List<VarList> abstractVarLists = new ArrayList<>();
 
-    AsyncAbstractModelGenerator(final AsyncSwarmFile sf, final List<Integer> index) throws PrismException {
-        super(sf, index);
+    AsyncAbstractModelGenerator(final AsyncSwarmFile sf, final FaultFile ff, final List<Integer> index) throws PrismException {
+        super(sf, ff, index);
         for (int i = 0; i < index.size(); ++i) {
             final VarList abstractVarList = new VarList();
             final RenamedModule rm = new RenamedModule("agent", "agent" + i + "Abs");
@@ -30,8 +29,9 @@ class AsyncAbstractModelGenerator extends AsyncConcreteModelGenerator {
             }
             final Module agentCopy = (Module) swarmFile.getAgents().get(i).deepCopy();
             final Module abstractAgent = (Module) agentCopy.rename(rm);
-            abstractAgent.accept(
-                    new FindAllVars(getAbstractVarNames(abstractVarList), getAbstractVarTypes(abstractVarList)));
+            final FindAllVars varVisitor = new FindAllVars(getAbstractVarNames(abstractVarList), getAbstractVarTypes(abstractVarList));
+            abstractAgent.accept(varVisitor);
+            faultProvider.introduceAbstract(rm, varVisitor);
             abstractAgents.add(abstractAgent);
             abstractVarLists.add(abstractVarList);
         }
@@ -91,7 +91,7 @@ class AsyncAbstractModelGenerator extends AsyncConcreteModelGenerator {
                         } else if (swarmFile.getActionTypes().getA().contains(act)) {
                             final AsyncAbstractTransition grow = new AsyncAbstractTransition(state, i, true);
                             final AsyncAbstractTransition shrink = new AsyncAbstractTransition(state, i, false);
-                            buildGrowAndShrinkTransitions(state, command, grow, shrink);
+                            faultProvider.buildGrowAndShrinkTransitions(i, state, command, grow, shrink);
                             transitionList.add(grow);
                             actionNames.add("(" + act + ", " + i + ", " + state + ", up)");
                             transitionList.add(shrink);
@@ -99,10 +99,10 @@ class AsyncAbstractModelGenerator extends AsyncConcreteModelGenerator {
                         } else if (swarmFile.getActionTypes().getAe().contains(act)) {
                             final AsyncAbstractTransition grow = new AsyncAbstractTransition(state, i, true);
                             final AsyncAbstractTransition shrink = new AsyncAbstractTransition(state, i, false);
-                            buildGrowAndShrinkTransitions(state, command, grow, shrink);
+                            faultProvider.buildGrowAndShrinkTransitions(i, state, command, grow, shrink);
                             final Command matchingEnv = getMatchingEnvironmentCommand(act);
                             if (matchingEnv != null) {
-                                final ChoiceListFlexi envChoice = getChoice(matchingEnv, exploreState, -1, 0);
+                                final ChoiceListFlexi envChoice = faultProvider.getChoice(matchingEnv, exploreState, -1, 0);
                                 grow.productWith(envChoice);
                                 shrink.productWith(envChoice);
                                 transitionList.add(grow);
@@ -123,17 +123,6 @@ class AsyncAbstractModelGenerator extends AsyncConcreteModelGenerator {
         for (final String act : enabledGs.keySet()) {
             actionNames.add(act);
             transitionList.add(enabledGs.get(act));
-        }
-    }
-
-    void buildGrowAndShrinkTransitions(final State state, final Command command,
-                                       final AsyncAbstractTransition grow,
-                                       final AsyncAbstractTransition shrink) throws PrismLangException {
-        for (int j = 0; j < command.getUpdates().getNumUpdates(); ++j) {
-            final ArrayList<Update> list = new ArrayList<>();
-            list.add(command.getUpdates().getUpdate(j));
-            grow.add(command.getUpdates().getProbabilityInState(j, state), list);
-            shrink.add(command.getUpdates().getProbabilityInState(j, state), list);
         }
     }
 }
