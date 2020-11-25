@@ -30,6 +30,8 @@ import parser.ast.Module;
 import parser.ast.*;
 import prism.PrismLangException;
 
+import java.util.List;
+
 // Performs a depth-first traversal of an asbtract syntax tree (AST).
 // Many traversal-based tasks can be implemented by extending and either:
 // (a) overriding defaultVisitPre or defaultVisitPost
@@ -49,7 +51,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ModulesFile e) throws PrismLangException {
+    public Object visit(final ModulesFile e) throws PrismLangException {
         visitPre(e);
         int i, n;
         if (e.getFormulaList() != null) e.getFormulaList().accept(this);
@@ -87,11 +89,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final PropertiesFile e) throws PrismLangException {
+    public Object visit(final PropertiesFile e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n;
-		if (e.getLabelList() != null) e.getLabelList().accept(this);
+        final int n;
+        if (e.getLabelList() != null) e.getLabelList().accept(this);
         if (e.getConstantList() != null) e.getConstantList().accept(this);
         n = e.getNumProperties();
         for (i = 0; i < n; i++) {
@@ -111,7 +113,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final Property e) throws PrismLangException {
+    public Object visit(final Property e) throws PrismLangException {
         visitPre(e);
         if (e.getExpression() != null) e.getExpression().accept(this);
         visitPost(e);
@@ -128,11 +130,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final FormulaList e) throws PrismLangException {
+    public Object visit(final FormulaList e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n;
-		n = e.size();
+        final int n;
+        n = e.size();
         for (i = 0; i < n; i++) {
             if (e.getFormula(i) != null) e.getFormula(i).accept(this);
         }
@@ -150,11 +152,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final LabelList e) throws PrismLangException {
+    public Object visit(final LabelList e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n;
-		n = e.size();
+        final int n;
+        n = e.size();
         for (i = 0; i < n; i++) {
             if (e.getLabel(i) != null) e.getLabel(i).accept(this);
         }
@@ -172,11 +174,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ConstantList e) throws PrismLangException {
+    public Object visit(final ConstantList e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n;
-		n = e.size();
+        final int n;
+        n = e.size();
         for (i = 0; i < n; i++) {
             if (e.getConstant(i) != null) e.getConstant(i).accept(this);
         }
@@ -194,7 +196,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final Declaration e) throws PrismLangException {
+    public Object visit(final Declaration e) throws PrismLangException {
         visitPre(e);
         if (e.getDeclType() != null) e.getDeclType().accept(this);
         if (e.getStart() != null) e.getStart().accept(this);
@@ -212,7 +214,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final DeclarationInt e) throws PrismLangException {
+    public Object visit(final DeclarationInt e) throws PrismLangException {
         visitPre(e);
         if (e.getLow() != null) e.getLow().accept(this);
         if (e.getHigh() != null) e.getHigh().accept(this);
@@ -230,7 +232,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final DeclarationBool e) throws PrismLangException {
+    public Object visit(final DeclarationBool e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -246,7 +248,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final DeclarationArray e) throws PrismLangException {
+    public Object visit(final DeclarationArray e) throws PrismLangException {
         visitPre(e);
         if (e.getLow() != null) e.getLow().accept(this);
         if (e.getHigh() != null) e.getHigh().accept(this);
@@ -265,7 +267,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final DeclarationClock e) throws PrismLangException {
+    public Object visit(final DeclarationClock e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -281,7 +283,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final DeclarationIntUnbounded e) throws PrismLangException {
+    public Object visit(final DeclarationIntUnbounded e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -297,7 +299,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final parser.ast.Module e) throws PrismLangException {
+    public Object visit(final parser.ast.Module e) throws PrismLangException {
         // Note: a few classes override this method (e.g. SemanticCheck)
         // so take care to update those versions if changing this method
         visitPre(e);
@@ -326,7 +328,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final Command e) throws PrismLangException {
+    public Object visit(final Command e) throws PrismLangException {
         // Note: a few classes override this method (e.g. SemanticCheck)
         // so take care to update those versions if changing this method
         visitPre(e);
@@ -346,7 +348,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SCommand e) throws PrismLangException {
+    public Object visit(final SCommand e) throws PrismLangException {
         // Note: a few classes override this method (e.g. SemanticCheck)
         // so take care to update those versions if changing this method
         visitPre(e);
@@ -366,11 +368,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final Updates e) throws PrismLangException {
+    public Object visit(final Updates e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n;
-		n = e.getNumUpdates();
+        final int n;
+        n = e.getNumUpdates();
         for (i = 0; i < n; i++) {
             if (e.getProbability(i) != null) e.getProbability(i).accept(this);
             if (e.getUpdate(i) != null) e.getUpdate(i).accept(this);
@@ -389,11 +391,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final Update e) throws PrismLangException {
+    public Object visit(final Update e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n;
-		n = e.getNumElements();
+        final int n;
+        n = e.getNumElements();
         for (i = 0; i < n; i++) {
             if (e.getExpression(i) != null) e.getExpression(i).accept(this);
         }
@@ -411,7 +413,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final RenamedModule e) throws PrismLangException {
+    public Object visit(final RenamedModule e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -427,11 +429,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final RewardStruct e) throws PrismLangException {
+    public Object visit(final RewardStruct e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n;
-		n = e.getNumItems();
+        final int n;
+        n = e.getNumItems();
         for (i = 0; i < n; i++) {
             if (e.getRewardStructItem(i) != null) e.getRewardStructItem(i).accept(this);
         }
@@ -449,7 +451,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final RewardStructItem e) throws PrismLangException {
+    public Object visit(final RewardStructItem e) throws PrismLangException {
         visitPre(e);
         e.getStates().accept(this);
         e.getReward().accept(this);
@@ -467,7 +469,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final Player e) throws PrismLangException {
+    public Object visit(final Player e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -483,11 +485,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemInterleaved e) throws PrismLangException {
+    public Object visit(final SystemInterleaved e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n = e.getNumOperands();
-		for (i = 0; i < n; i++) {
+        final int n = e.getNumOperands();
+        for (i = 0; i < n; i++) {
             if (e.getOperand(i) != null) e.getOperand(i).accept(this);
         }
         visitPost(e);
@@ -504,11 +506,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemFullParallel e) throws PrismLangException {
+    public Object visit(final SystemFullParallel e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n = e.getNumOperands();
-		for (i = 0; i < n; i++) {
+        final int n = e.getNumOperands();
+        for (i = 0; i < n; i++) {
             if (e.getOperand(i) != null) e.getOperand(i).accept(this);
         }
         visitPost(e);
@@ -525,7 +527,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemParallel e) throws PrismLangException {
+    public Object visit(final SystemParallel e) throws PrismLangException {
         visitPre(e);
         e.getOperand1().accept(this);
         e.getOperand2().accept(this);
@@ -543,7 +545,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemHide e) throws PrismLangException {
+    public Object visit(final SystemHide e) throws PrismLangException {
         visitPre(e);
         e.getOperand().accept(this);
         visitPost(e);
@@ -560,7 +562,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemRename e) throws PrismLangException {
+    public Object visit(final SystemRename e) throws PrismLangException {
         visitPre(e);
         e.getOperand().accept(this);
         visitPost(e);
@@ -577,7 +579,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemModule e) throws PrismLangException {
+    public Object visit(final SystemModule e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -593,7 +595,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemBrackets e) throws PrismLangException {
+    public Object visit(final SystemBrackets e) throws PrismLangException {
         visitPre(e);
         e.getOperand().accept(this);
         visitPost(e);
@@ -610,7 +612,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final SystemReference e) throws PrismLangException {
+    public Object visit(final SystemReference e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -626,7 +628,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionTemporal e) throws PrismLangException {
+    public Object visit(final ExpressionTemporal e) throws PrismLangException {
         visitPre(e);
         if (e.getOperand1() != null) e.getOperand1().accept(this);
         if (e.getOperand2() != null) e.getOperand2().accept(this);
@@ -646,7 +648,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionITE e) throws PrismLangException {
+    public Object visit(final ExpressionITE e) throws PrismLangException {
         visitPre(e);
         e.getOperand1().accept(this);
         e.getOperand2().accept(this);
@@ -665,7 +667,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionBinaryOp e) throws PrismLangException {
+    public Object visit(final ExpressionBinaryOp e) throws PrismLangException {
         visitPre(e);
         e.getOperand1().accept(this);
         e.getOperand2().accept(this);
@@ -683,7 +685,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionUnaryOp e) throws PrismLangException {
+    public Object visit(final ExpressionUnaryOp e) throws PrismLangException {
         visitPre(e);
         e.getOperand().accept(this);
         visitPost(e);
@@ -700,11 +702,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionFunc e) throws PrismLangException {
+    public Object visit(final ExpressionFunc e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n = e.getNumOperands();
-		for (i = 0; i < n; i++) {
+        final int n = e.getNumOperands();
+        for (i = 0; i < n; i++) {
             if (e.getOperand(i) != null) e.getOperand(i).accept(this);
         }
         visitPost(e);
@@ -721,7 +723,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionIdent e) throws PrismLangException {
+    public Object visit(final ExpressionIdent e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -737,7 +739,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionLiteral e) throws PrismLangException {
+    public Object visit(final ExpressionLiteral e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -753,7 +755,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionConstant e) throws PrismLangException {
+    public Object visit(final ExpressionConstant e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -769,7 +771,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionFormula e) throws PrismLangException {
+    public Object visit(final ExpressionFormula e) throws PrismLangException {
         visitPre(e);
         if (e.getDefinition() != null) e.getDefinition().accept(this);
         visitPost(e);
@@ -786,7 +788,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionVar e) throws PrismLangException {
+    public Object visit(final ExpressionVar e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -802,7 +804,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionProb e) throws PrismLangException {
+    public Object visit(final ExpressionProb e) throws PrismLangException {
         visitPre(e);
         if (e.getProb() != null) e.getProb().accept(this);
         if (e.getExpression() != null) e.getExpression().accept(this);
@@ -821,7 +823,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionReward e) throws PrismLangException {
+    public Object visit(final ExpressionReward e) throws PrismLangException {
         visitPre(e);
         if (e.getRewardStructIndex() != null && e.getRewardStructIndex() instanceof Expression)
             ((Expression) e.getRewardStructIndex()).accept(this);
@@ -844,7 +846,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionNash e) throws PrismLangException {
+    public Object visit(final ExpressionNash e) throws PrismLangException {
         visitPre(e);
         if (e.getExpression() != null) ((Expression) e.getExpression()).accept(this);
         visitPost(e);
@@ -861,7 +863,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionNashProb e) throws PrismLangException {
+    public Object visit(final ExpressionNashProb e) throws PrismLangException {
         visitPre(e);
         if (e.getExpression1() != null) ((Expression) e.getExpression1()).accept(this);
         if (e.getExpression2() != null) ((Expression) e.getExpression2()).accept(this);
@@ -879,7 +881,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionNashReward e) throws PrismLangException {
+    public Object visit(final ExpressionNashReward e) throws PrismLangException {
         visitPre(e);
 
         // ADD FOR EXPRESSIONNASHREWARD
@@ -898,7 +900,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionSS e) throws PrismLangException {
+    public Object visit(final ExpressionSS e) throws PrismLangException {
         visitPre(e);
         if (e.getProb() != null) e.getProb().accept(this);
         if (e.getExpression() != null) e.getExpression().accept(this);
@@ -917,7 +919,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionExists e) throws PrismLangException {
+    public Object visit(final ExpressionExists e) throws PrismLangException {
         visitPre(e);
         if (e.getExpression() != null) e.getExpression().accept(this);
         visitPost(e);
@@ -934,7 +936,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionForAll e) throws PrismLangException {
+    public Object visit(final ExpressionForAll e) throws PrismLangException {
         visitPre(e);
         if (e.getExpression() != null) e.getExpression().accept(this);
         visitPost(e);
@@ -951,11 +953,11 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionStrategy e) throws PrismLangException {
+    public Object visit(final ExpressionStrategy e) throws PrismLangException {
         visitPre(e);
         int i;
-		final int n = e.getNumOperands();
-		for (i = 0; i < n; i++) {
+        final int n = e.getNumOperands();
+        for (i = 0; i < n; i++) {
             if (e.getOperand(i) != null) e.getOperand(i).accept(this);
         }
         visitPost(e);
@@ -972,7 +974,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionLabel e) throws PrismLangException {
+    public Object visit(final ExpressionLabel e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -988,7 +990,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionProp e) throws PrismLangException {
+    public Object visit(final ExpressionProp e) throws PrismLangException {
         visitPre(e);
         visitPost(e);
         return null;
@@ -1004,7 +1006,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ExpressionFilter e) throws PrismLangException {
+    public Object visit(final ExpressionFilter e) throws PrismLangException {
         visitPre(e);
         if (e.getFilter() != null) e.getFilter().accept(this);
         if (e.getOperand() != null) e.getOperand().accept(this);
@@ -1022,7 +1024,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final Filter e) throws PrismLangException {
+    public Object visit(final Filter e) throws PrismLangException {
         visitPre(e);
         if (e.getExpression() != null) e.getExpression().accept(this);
         visitPost(e);
@@ -1039,7 +1041,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ForLoop e) throws PrismLangException {
+    public Object visit(final ForLoop e) throws PrismLangException {
         visitPre(e);
         if (e.getFrom() != null) e.getFrom().accept(this);
         if (e.getTo() != null) e.getTo().accept(this);
@@ -1133,16 +1135,34 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     // -----------------------------------------------------------------------------------
+    public void visitPre(final Fault e) throws PrismLangException {
+        defaultVisitPre(e);
+    }
+
+    @Override
+    public Object visit(final Fault e) throws PrismLangException {
+        visitPre(e);
+        e.getGuard().accept(this);
+        e.getUpdates().accept(this);
+        visitPost(e);
+        return null;
+    }
+
+    public void visitPost(final Fault e) throws PrismLangException {
+        defaultVisitPost(e);
+    }
+
+    // -----------------------------------------------------------------------------------
     public void visitPre(final FaultFile e) throws PrismLangException {
         defaultVisitPre(e);
     }
 
     @Override
-	public Object visit(final FaultFile faultFile) throws PrismLangException {
+    public Object visit(final FaultFile faultFile) throws PrismLangException {
         visitPre(faultFile);
-        for (int i = 0; i < faultFile.getGuards().size(); ++i) {
-            faultFile.getGuards().get(i).accept(this);
-            faultFile.getUpdates().get(i).accept(this);
+        for (final List<Fault> faultList : faultFile.getFaults()) {
+            for (final Fault fault : faultList)
+                fault.accept(this);
         }
         visitPost(faultFile);
         return null;
@@ -1158,7 +1178,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final ActionTypes actionTypes) throws PrismLangException {
+    public Object visit(final ActionTypes actionTypes) throws PrismLangException {
         visitPre(actionTypes);
         visitPost(actionTypes);
         return null;
@@ -1174,7 +1194,7 @@ public class ASTTraverse implements ASTVisitor {
     }
 
     @Override
-	public Object visit(final AsyncSwarmFile swarmFile) throws PrismLangException {
+    public Object visit(final AsyncSwarmFile swarmFile) throws PrismLangException {
         visitPre(swarmFile);
         swarmFile.getActionTypes().accept(this);
         for (final Module agent : swarmFile.getAgents())

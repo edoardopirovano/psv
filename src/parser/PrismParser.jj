@@ -670,33 +670,52 @@ SyncSwarmFile SyncSwarmFile() throws PrismLangException :
 }
 
 // Fault file
-FaultFile FaultFile() throws PrismLangException :
+Fault Fault() throws PrismLangException :
 {
-	ArrayList<String> commands = new ArrayList<String>();
-	ArrayList<Expression> guards = new ArrayList<Expression>();
-	ArrayList<Updates> updates = new ArrayList<Updates>();
 	String command;
 	Expression guard;
-	Updates update;
+	Updates updates;
+	Fault f = new Fault();
+	Token begin = null;
+}
+{
+	( begin = <LPARENTH>
+	 command = Identifier()
+	 <COMMA>
+	 guard = Expression(false, false)
+	 <RPARENTH>
+	 <RARROW>
+	 updates = Updates()
+	 <SEMICOLON>
+	)
+	{
+	    f.setCommand(command);
+	    f.setGuard(guard);
+	    f.setUpdates(updates);
+		return f;
+	}
+}
+
+// Fault file
+FaultFile FaultFile() throws PrismLangException :
+{
+	List<List<Fault>> faults = new ArrayList<List<Fault>>();
+	List<Fault> faultList = new ArrayList<Fault>();
+	Fault fault;
 	FaultFile ff = new FaultFile();
 	Token begin = null;
 }
 {
 	( { begin = getToken(1); }
-	( <LPARENTH>
-	 command = Identifier() { commands.add(command); }
-	 <COMMA>
-	 guard = Expression(false, false) { guards.add(guard); }
-	 <RPARENTH>
-	 <RARROW>
-	 update = Updates() { updates.add(update); }
-	 <SEMICOLON>
-	 )*
+	( <AGENT>
+	(fault = Fault() { faultList.add(fault); })*
+	{
+        faults.add(faultList);
+        faultList = new ArrayList();
+    })*
 	) <EOF>
 	{
-	    ff.setCommands(commands);
-	    ff.setGuards(guards);
-	    ff.setUpdates(updates);
+	    ff.setFaults(faults);
 		return ff;
 	}
 }

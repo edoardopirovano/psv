@@ -29,75 +29,134 @@ package parser.visitor;
 import parser.ast.*;
 import prism.PrismLangException;
 
-public interface ASTVisitor
-{
-	// ASTElement classes (model/properties file)
-	public Object visit(ModulesFile e) throws PrismLangException;
-	public Object visit(PropertiesFile e) throws PrismLangException;
-	public Object visit(Property e) throws PrismLangException;
-	public Object visit(FormulaList e) throws PrismLangException;
-	public Object visit(LabelList e) throws PrismLangException;
-	public Object visit(ConstantList e) throws PrismLangException;
-	public Object visit(Declaration e) throws PrismLangException;
-	public Object visit(DeclarationInt e) throws PrismLangException;
-	public Object visit(DeclarationBool e) throws PrismLangException;
-	public Object visit(DeclarationArray e) throws PrismLangException;
-	public Object visit(DeclarationClock e) throws PrismLangException;
-	public Object visit(DeclarationIntUnbounded e) throws PrismLangException;
-	public Object visit(parser.ast.Module e) throws PrismLangException;
-	public Object visit(Command e) throws PrismLangException;
-	public Object visit(Updates e) throws PrismLangException;
-	public Object visit(Update e) throws PrismLangException;
-	public Object visit(RenamedModule e) throws PrismLangException;
-	public Object visit(RewardStruct e) throws PrismLangException;
-	public Object visit(RewardStructItem e) throws PrismLangException;
-	public Object visit(Player e) throws PrismLangException;
-	// ASTElement/SystemDefn classes
-	public Object visit(SystemInterleaved e) throws PrismLangException;
-	public Object visit(SystemFullParallel e) throws PrismLangException;
-	public Object visit(SystemParallel e) throws PrismLangException;
-	public Object visit(SystemHide e) throws PrismLangException;
-	public Object visit(SystemRename e) throws PrismLangException;
-	public Object visit(SystemModule e) throws PrismLangException;
-	public Object visit(SystemBrackets e) throws PrismLangException;
-	public Object visit(SystemReference e) throws PrismLangException;
-	// ASTElement/Expression classes
-	public Object visit(ExpressionTemporal e) throws PrismLangException;
-	public Object visit(ExpressionITE e) throws PrismLangException;
-	public Object visit(ExpressionBinaryOp e) throws PrismLangException;
-	public Object visit(ExpressionUnaryOp e) throws PrismLangException;
-	public Object visit(ExpressionFunc e) throws PrismLangException;
-	public Object visit(ExpressionIdent e) throws PrismLangException;
-	public Object visit(ExpressionLiteral e) throws PrismLangException;
-	public Object visit(ExpressionConstant e) throws PrismLangException;
-	public Object visit(ExpressionFormula e) throws PrismLangException;
-	public Object visit(ExpressionVar e) throws PrismLangException;
-	public Object visit(ExpressionProb e) throws PrismLangException;
-	public Object visit(ExpressionReward e) throws PrismLangException;
-	///
-	public Object visit(ExpressionNash e) throws PrismLangException;
-	public Object visit(ExpressionNashProb e) throws PrismLangException;
-	public Object visit(ExpressionNashReward e) throws PrismLangException;
-	public Object visit(SCommand e) throws PrismLangException;
-	///
-	public Object visit(ExpressionSS e) throws PrismLangException;
-	public Object visit(ExpressionExists e) throws PrismLangException;
-	public Object visit(ExpressionForAll e) throws PrismLangException;
-	public Object visit(ExpressionStrategy e) throws PrismLangException;
-	public Object visit(ExpressionLabel e) throws PrismLangException;
-	public Object visit(ExpressionProp e) throws PrismLangException;
-	public Object visit(ExpressionFilter e) throws PrismLangException;
-	// ASTElement classes (misc.)
-	public Object visit(Filter e) throws PrismLangException;
-	public Object visit(ForLoop e) throws PrismLangException;
+public interface ASTVisitor {
+    // ASTElement classes (model/properties file)
+    public Object visit(ModulesFile e) throws PrismLangException;
 
-	// Swarm classes
-	public Object visit(SyncSwarmFile swarmFile) throws PrismLangException;;
-	public Object visit(Agent agent) throws PrismLangException;
-	public Object visit(Action action) throws PrismLangException;
-	public Object visit(AgentUpdate agentUpdate) throws PrismLangException;
-	public Object visit(FaultFile agentUpdate) throws PrismLangException;
-	public Object visit(AsyncSwarmFile agentUpdate) throws PrismLangException;
-	public Object visit(ActionTypes agentUpdate) throws PrismLangException;
+    public Object visit(PropertiesFile e) throws PrismLangException;
+
+    public Object visit(Property e) throws PrismLangException;
+
+    public Object visit(FormulaList e) throws PrismLangException;
+
+    public Object visit(LabelList e) throws PrismLangException;
+
+    public Object visit(ConstantList e) throws PrismLangException;
+
+    public Object visit(Declaration e) throws PrismLangException;
+
+    public Object visit(DeclarationInt e) throws PrismLangException;
+
+    public Object visit(DeclarationBool e) throws PrismLangException;
+
+    public Object visit(DeclarationArray e) throws PrismLangException;
+
+    public Object visit(DeclarationClock e) throws PrismLangException;
+
+    public Object visit(DeclarationIntUnbounded e) throws PrismLangException;
+
+    public Object visit(parser.ast.Module e) throws PrismLangException;
+
+    public Object visit(Command e) throws PrismLangException;
+
+    public Object visit(Updates e) throws PrismLangException;
+
+    public Object visit(Update e) throws PrismLangException;
+
+    public Object visit(RenamedModule e) throws PrismLangException;
+
+    public Object visit(RewardStruct e) throws PrismLangException;
+
+    public Object visit(RewardStructItem e) throws PrismLangException;
+
+    public Object visit(Player e) throws PrismLangException;
+
+    // ASTElement/SystemDefn classes
+    public Object visit(SystemInterleaved e) throws PrismLangException;
+
+    public Object visit(SystemFullParallel e) throws PrismLangException;
+
+    public Object visit(SystemParallel e) throws PrismLangException;
+
+    public Object visit(SystemHide e) throws PrismLangException;
+
+    public Object visit(SystemRename e) throws PrismLangException;
+
+    public Object visit(SystemModule e) throws PrismLangException;
+
+    public Object visit(SystemBrackets e) throws PrismLangException;
+
+    public Object visit(SystemReference e) throws PrismLangException;
+
+    // ASTElement/Expression classes
+    public Object visit(ExpressionTemporal e) throws PrismLangException;
+
+    public Object visit(ExpressionITE e) throws PrismLangException;
+
+    public Object visit(ExpressionBinaryOp e) throws PrismLangException;
+
+    public Object visit(ExpressionUnaryOp e) throws PrismLangException;
+
+    public Object visit(ExpressionFunc e) throws PrismLangException;
+
+    public Object visit(ExpressionIdent e) throws PrismLangException;
+
+    public Object visit(ExpressionLiteral e) throws PrismLangException;
+
+    public Object visit(ExpressionConstant e) throws PrismLangException;
+
+    public Object visit(ExpressionFormula e) throws PrismLangException;
+
+    public Object visit(ExpressionVar e) throws PrismLangException;
+
+    public Object visit(ExpressionProb e) throws PrismLangException;
+
+    public Object visit(ExpressionReward e) throws PrismLangException;
+
+    ///
+    public Object visit(ExpressionNash e) throws PrismLangException;
+
+    public Object visit(ExpressionNashProb e) throws PrismLangException;
+
+    public Object visit(ExpressionNashReward e) throws PrismLangException;
+
+    public Object visit(SCommand e) throws PrismLangException;
+
+    ///
+    public Object visit(ExpressionSS e) throws PrismLangException;
+
+    public Object visit(ExpressionExists e) throws PrismLangException;
+
+    public Object visit(ExpressionForAll e) throws PrismLangException;
+
+    public Object visit(ExpressionStrategy e) throws PrismLangException;
+
+    public Object visit(ExpressionLabel e) throws PrismLangException;
+
+    public Object visit(ExpressionProp e) throws PrismLangException;
+
+    public Object visit(ExpressionFilter e) throws PrismLangException;
+
+    // ASTElement classes (misc.)
+    public Object visit(Filter e) throws PrismLangException;
+
+    public Object visit(ForLoop e) throws PrismLangException;
+
+    // Swarm classes
+    public Object visit(SyncSwarmFile swarmFile) throws PrismLangException;
+
+    public Object visit(Agent agent) throws PrismLangException;
+
+    public Object visit(Action action) throws PrismLangException;
+
+    public Object visit(AgentUpdate agentUpdate) throws PrismLangException;
+
+    public Object visit(FaultFile agentUpdate) throws PrismLangException;
+
+    public Object visit(AsyncSwarmFile agentUpdate) throws PrismLangException;
+
+    public Object visit(ActionTypes agentUpdate) throws PrismLangException;
+
+    public Object visit(Fault fault) throws PrismLangException;
 }
 

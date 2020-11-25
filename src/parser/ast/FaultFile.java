@@ -4,70 +4,46 @@ import parser.visitor.ASTVisitor;
 import prism.PrismLangException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FaultFile extends ASTElement {
-    private ArrayList<String> commands;
-    private ArrayList<Expression> guards;
-    private ArrayList<Updates> updates;
+    private List<List<Fault>> faults;
 
     @Override
-    public Object accept(ASTVisitor v) throws PrismLangException {
+    public Object accept(final ASTVisitor v) throws PrismLangException {
         return v.visit(this);
     }
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < commands.size(); ++i) {
-            s.append("(");
-            s.append(commands.get(i));
-            s.append(", ");
-            s.append(guards.get(i).toString());
-            s.append(") -> ");
-            s.append(updates.get(i).toString());
-            s.append(";\n");
+        final StringBuilder s = new StringBuilder();
+        for (final List<Fault> faultList : faults) {
+            s.append("agent\n");
+            for (final Fault fault : faultList)
+                s.append(fault.toString());
         }
         return s.toString();
     }
 
     @Override
     public ASTElement deepCopy() {
-        FaultFile copy = new FaultFile();
-        ArrayList<String> newCommands = new ArrayList<>();
-        ArrayList<Expression> newGuards = new ArrayList<>();
-        ArrayList<Updates> newUpdates = new ArrayList<>();
-        for (int i = 0; i < commands.size(); ++i) {
-            newCommands.add(commands.get(i));
-            newGuards.add(guards.get(i).deepCopy());
-            newUpdates.add((Updates) updates.get(i).deepCopy());
+        final FaultFile copy = new FaultFile();
+        final List<List<Fault>> newFaults = new ArrayList<>(faults.size());
+        for (final List<Fault> faultList : faults) {
+            final List<Fault> faultListCopy = new ArrayList<>(faultList.size());
+            for (final Fault fault : faultList)
+                faultListCopy.add((Fault) fault.deepCopy());
+            newFaults.add(faultListCopy);
         }
-        copy.setCommands(newCommands);
-        copy.setGuards(newGuards);
-        copy.setUpdates(newUpdates);
+        copy.setFaults(newFaults);
         return copy;
     }
 
-    public ArrayList<String> getCommands() {
-        return commands;
+    public List<List<Fault>> getFaults() {
+        return faults;
     }
 
-    public void setCommands(ArrayList<String> commands) {
-        this.commands = commands;
-    }
-
-    public ArrayList<Expression> getGuards() {
-        return guards;
-    }
-
-    public void setGuards(ArrayList<Expression> guards) {
-        this.guards = guards;
-    }
-
-    public ArrayList<Updates> getUpdates() {
-        return updates;
-    }
-
-    public void setUpdates(ArrayList<Updates> updates) {
-        this.updates = updates;
+    public void setFaults(final List<List<Fault>> faults) {
+        this.faults = faults;
     }
 }
