@@ -4,7 +4,7 @@ agent
 	[a] (stateA=0);
 	[b] (stateA=1);
 
-	[null] true;
+	[nullA] true;
 	
 	update
 		(a, true, {}) -> 0.5:(stateA'=0) + 0.5:(stateA'=1);
@@ -17,10 +17,10 @@ agent
 	[c] (stateB=2);
 	[d] (stateB=3);
 
-	[null] true;
+	[nullB] true;
 
 	update
-		(c, true, {x}) -> 1.0:(stateB'=3);
+		(c, true, {b}) -> 1.0:(stateB'=3);
 	endupdate
 endagent
 
@@ -29,10 +29,10 @@ environment
 
 	[e] true;
 
-	[null] true;
+	[nullE] true;
 	
 	update
-		(e, state=4, {b}) -> 1.0:(state'=5);
+		(e, state=4, {d}) -> 1.0:(state'=5);
 	endupdate
 endenvironment
 
