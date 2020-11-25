@@ -1,0 +1,60 @@
+asynchronous = {p_approach, n_approach}
+agentEnvironment = {p_enter, p_exit, n_enter, n_exit}
+globalSynchronous = {p_lock, n_lock}
+
+agent module NormalTrain
+    // 1: Waiting
+    // 2: In tunnel
+    // 3: Away
+    // 4: Tunnel locked
+    phaseN : [1..4] init 4;
+
+    // Tunnel locking and unlocking
+    [p_lock] (phaseN=3) -> 1.0:(phaseN'=4);
+    [p_lock] (phaseN=1) -> 1.0:(phaseN'=4);
+    [n_lock] (phaseN=4) -> 1.0:(phaseN'=3);
+
+    // Train movement
+    [n_approach] (phaseN=3) -> 1.0:(phaseN'=1);
+    [n_enter] (phaseN=1) -> 1.0:(phaseN'=2);
+    [n_exit] (phaseN=2) -> 1.0:(phaseN'=3);
+endmodule
+
+agent module PrioritisedTrain
+    // 1: Waiting
+    // 2: In tunnel
+    // 3: Away
+    // 4: Tunnel locked
+    phaseP : [1..4] init 1;
+
+    // Tunnel locking and unlocking
+    [n_lock] (phaseP=3) -> 1.0:(phaseP'=4);
+    [p_lock] (phaseP=4) -> 1.0:(phaseP'=3);
+
+    // Train movement
+    [p_approach] (phaseP=3) -> 1.0:(phaseP'=1);
+    [p_enter] (phaseP=1) -> 1.0:(phaseP'=2);
+    [p_exit] (phaseP=2) -> 1.0:(phaseP'=3);
+endmodule
+
+environment module Controller
+    // 1: Green, P lock
+    // 2: Green, N lock
+    // 3: Red
+    phaseE : [1..3] init 1;
+
+    // Switching between P and N
+    [n_lock] (phaseE=1) -> 1.0:(phaseE'=2);
+    [p_lock] (phaseE=2) -> 1.0:(phaseE'=1);
+
+    // Entering actions
+    [p_enter] (phaseE=1) -> 1.0:(phaseE'=3);
+    [n_enter] (phaseE=2) -> 1.0:(phaseE'=3);
+
+    // Exiting actions
+    [p_exit] (phaseE=3) -> 1.0:(phaseE'=1);
+    [n_exit] (phaseE=3) -> 1.0:(phaseE'=2);
+endmodule
+
+label "normalTrainInTunnel" = (phaseN_0_0=2);
+label "normalTrain2InTunnel" = (phaseN_0_1=2);

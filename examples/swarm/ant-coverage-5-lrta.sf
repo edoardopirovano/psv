@@ -1,0 +1,207 @@
+agent
+	xCoord : [0..4] init 0;
+	yCoord : [0..4] init 0;
+	
+	observedLeft : [0..1] init 0; 
+	observedRight : [0..1] init 0;
+	observedUp : [0..1] init 0;
+	observedDown : [0..1] init 0;
+	
+	state : [0..2] init 0;
+	
+	[visit00] (xCoord=0 & yCoord=0 & state=0) : 1;
+	[visit01] (xCoord=0 & yCoord=1 & state=0) : 1;
+	[visit02] (xCoord=0 & yCoord=2 & state=0) : 1;
+	[visit03] (xCoord=0 & yCoord=3 & state=0) : 1;
+	[visit04] (xCoord=0 & yCoord=4 & state=0) : 1;
+	[visit10] (xCoord=1 & yCoord=0 & state=0) : 1;
+	[visit11] (xCoord=1 & yCoord=1 & state=0) : 1;
+	[visit12] (xCoord=1 & yCoord=2 & state=0) : 1;
+	[visit13] (xCoord=1 & yCoord=3 & state=0) : 1;
+	[visit14] (xCoord=1 & yCoord=4 & state=0) : 1;
+	[visit20] (xCoord=2 & yCoord=0 & state=0) : 1;
+	[visit21] (xCoord=2 & yCoord=1 & state=0) : 1;
+	[visit22] (xCoord=2 & yCoord=2 & state=0) : 1;
+	[visit23] (xCoord=2 & yCoord=3 & state=0) : 1;
+	[visit24] (xCoord=2 & yCoord=4 & state=0) : 1;
+	[visit30] (xCoord=3 & yCoord=0 & state=0) : 1;
+	[visit31] (xCoord=3 & yCoord=1 & state=0) : 1;
+	[visit32] (xCoord=3 & yCoord=2 & state=0) : 1;
+	[visit33] (xCoord=3 & yCoord=3 & state=0) : 1;
+	[visit34] (xCoord=3 & yCoord=4 & state=0) : 1;
+	[visit40] (xCoord=4 & yCoord=0 & state=0) : 1;
+	[visit41] (xCoord=4 & yCoord=1 & state=0) : 1;
+	[visit42] (xCoord=4 & yCoord=2 & state=0) : 1;
+	[visit43] (xCoord=4 & yCoord=3 & state=0) : 1;
+	[visit44] (xCoord=4 & yCoord=4 & state=0) : 1;
+	
+	[observe] (state=1) : 1;
+	
+	[moveLeft] (observedLeft=observedRight & observedRight=observedUp & observedUp=observedDown & state=2) : (1/4);
+	[moveRight] (observedLeft=observedRight & observedRight=observedUp & observedUp=observedDown & state=2) : (1/4);
+	[moveUp] (observedLeft=observedRight & observedRight=observedUp & observedUp=observedDown & state=2) : (1/4);
+	[moveDown] (observedLeft=observedRight & observedRight=observedUp & observedUp=observedDown & state=2) : (1/4);
+	
+	[moveLeft] (observedLeft<observedRight & observedLeft<observedUp & observedLeft<observedDown & state=2) : 1;
+	
+	[moveRight] (observedRight<observedLeft & observedRight<observedUp & observedRight<observedDown & state=2) : 1;
+	
+	[moveUp] (observedUp<observedLeft & observedUp<observedRight & observedUp<observedDown & state=2) : 1;
+	
+	[moveDown] (observedDown<observedLeft & observedDown<observedRight & observedDown<observedUp & state=2) : 1;
+	
+	[moveUp] (observedUp=observedDown & observedUp<observedLeft & observedUp<observedRight & state=2) : (1/2);
+	[moveDown] (observedUp=observedDown & observedUp<observedLeft & observedUp<observedRight & state=2) : (1/2);
+	
+	[moveUp] (observedUp=observedRight & observedUp<observedLeft & observedUp<observedDown & state=2) : (1/2);
+	[moveRight] (observedUp=observedRight & observedUp<observedLeft & observedUp<observedDown & state=2) : (1/2);
+	
+	[moveUp] (observedUp=observedLeft & observedUp<observedRight & observedUp<observedDown & state=2) : (1/2);
+	[moveLeft] (observedUp=observedLeft & observedUp<observedRight & observedUp<observedDown & state=2) : (1/2);
+	
+	[moveDown] (observedRight=observedDown & observedDown<observedLeft & observedDown<observedUp & state=2) : (1/2);
+	[moveRight] (observedRight=observedDown & observedDown<observedLeft & observedDown<observedUp & state=2) : (1/2);
+	
+	[moveDown] (observedLeft=observedDown & observedDown<observedRight & observedDown<observedUp & state=2) : (1/2);
+	[moveLeft] (observedLeft=observedDown & observedDown<observedRight & observedDown<observedUp & state=2) : (1/2);
+	
+	[moveRight] (observedLeft=observedRight & observedLeft<observedDown & observedLeft<observedUp & state=2) : (1/2);
+	[moveLeft] (observedLeft=observedRight & observedLeft<observedDown & observedLeft<observedUp & state=2) : (1/2);
+	
+	[moveRight] (observedDown=observedLeft & observedLeft=observedRight & observedLeft<observedUp & state=2) : (1/3);
+	[moveDown] (observedDown=observedLeft & observedLeft=observedRight & observedLeft<observedUp & state=2) : (1/3);
+	[moveLeft] (observedDown=observedLeft & observedLeft=observedRight & observedLeft<observedUp & state=2) : (1/3);
+	
+	[moveRight] (observedUp=observedLeft & observedLeft=observedRight & observedLeft<observedDown & state=2) : (1/3);
+	[moveUp] (observedUp=observedLeft & observedLeft=observedRight & observedLeft<observedDown & state=2) : (1/3);
+	[moveLeft] (observedUp=observedLeft & observedLeft=observedRight & observedLeft<observedDown & state=2) : (1/3);
+	
+	[moveDown] (observedUp=observedLeft & observedLeft=observedDown & observedLeft<observedRight & state=2) : (1/3);
+	[moveUp] (observedUp=observedLeft & observedLeft=observedDown & observedLeft<observedRight & state=2) : (1/3);
+	[moveLeft] (observedUp=observedLeft & observedLeft=observedDown & observedLeft<observedRight & state=2) : (1/3);
+	
+	[moveDown] (observedUp=observedRight & observedRight=observedDown & observedRight<observedLeft & state=2) : (1/3);
+	[moveUp] (observedUp=observedRight & observedRight=observedDown & observedRight<observedLeft & state=2) : (1/3);
+	[moveRight] (observedUp=observedRight & observedRight=observedDown & observedRight<observedLeft & state=2) : (1/3);
+	
+	update
+		(moveRight, xCoord<4, {}) -> (xCoord'=xCoord+1) & (state'=0);
+		(moveRight, xCoord=4, {}) -> (xCoord'=0) & (state'=0);
+		(moveLeft, xCoord>0, {}) -> (xCoord'=xCoord-1) & (state'=0);
+		(moveLeft, xCoord=0, {}) -> (xCoord'=4) & (state'=0);
+		(moveDown, yCoord<4, {}) -> (yCoord'=yCoord+1) & (state'=0);
+		(moveDown, yCoord=4, {}) -> (yCoord'=0) & (state'=0);
+		(moveUp, yCoord>0, {}) -> (yCoord'=yCoord-1) & (state'=0);
+		(moveUp, yCoord=0, {}) -> (yCoord'=4) & (state'=0);
+		
+		(visit00, true, {}) -> (state'=1);
+		(visit01, true, {}) -> (state'=1);
+		(visit02, true, {}) -> (state'=1);
+		(visit03, true, {}) -> (state'=1);
+		(visit04, true, {}) -> (state'=1);
+		(visit10, true, {}) -> (state'=1);
+		(visit11, true, {}) -> (state'=1);
+		(visit12, true, {}) -> (state'=1);
+		(visit13, true, {}) -> (state'=1);
+		(visit14, true, {}) -> (state'=1);
+		(visit20, true, {}) -> (state'=1);
+		(visit21, true, {}) -> (state'=1);
+		(visit22, true, {}) -> (state'=1);
+		(visit23, true, {}) -> (state'=1);
+		(visit24, true, {}) -> (state'=1);
+		(visit30, true, {}) -> (state'=1);
+		(visit31, true, {}) -> (state'=1);
+		(visit32, true, {}) -> (state'=1);
+		(visit33, true, {}) -> (state'=1);
+		(visit34, true, {}) -> (state'=1);
+		(visit40, true, {}) -> (state'=1);
+		(visit41, true, {}) -> (state'=1);
+		(visit42, true, {}) -> (state'=1);
+		(visit43, true, {}) -> (state'=1);
+		(visit44, true, {}) -> (state'=1);
+		
+		(observe, xCoord=0 & yCoord=0, {}) -> (observedLeft'=uValue40_E) & (observedRight'=uValue10_E) & (observedUp'=uValue04_E) & (observedDown'=uValue01_E) & (state'=2);
+		(observe, xCoord=0 & yCoord=1, {}) -> (observedLeft'=uValue41_E) & (observedRight'=uValue11_E) & (observedUp'=uValue00_E) & (observedDown'=uValue02_E) & (state'=2);
+		(observe, xCoord=0 & yCoord=2, {}) -> (observedLeft'=uValue42_E) & (observedRight'=uValue12_E) & (observedUp'=uValue01_E) & (observedDown'=uValue03_E) & (state'=2);
+		(observe, xCoord=0 & yCoord=3, {}) -> (observedLeft'=uValue43_E) & (observedRight'=uValue13_E) & (observedUp'=uValue02_E) & (observedDown'=uValue04_E) & (state'=2);
+		(observe, xCoord=0 & yCoord=4, {}) -> (observedLeft'=uValue44_E) & (observedRight'=uValue14_E) & (observedUp'=uValue03_E) & (observedDown'=uValue00_E) & (state'=2);
+		(observe, xCoord=1 & yCoord=0, {}) -> (observedLeft'=uValue00_E) & (observedRight'=uValue20_E) & (observedUp'=uValue14_E) & (observedDown'=uValue11_E) & (state'=2);
+		(observe, xCoord=1 & yCoord=1, {}) -> (observedLeft'=uValue01_E) & (observedRight'=uValue21_E) & (observedUp'=uValue10_E) & (observedDown'=uValue12_E) & (state'=2);
+		(observe, xCoord=1 & yCoord=2, {}) -> (observedLeft'=uValue02_E) & (observedRight'=uValue22_E) & (observedUp'=uValue11_E) & (observedDown'=uValue13_E) & (state'=2);
+		(observe, xCoord=1 & yCoord=3, {}) -> (observedLeft'=uValue03_E) & (observedRight'=uValue23_E) & (observedUp'=uValue12_E) & (observedDown'=uValue14_E) & (state'=2);
+		(observe, xCoord=1 & yCoord=4, {}) -> (observedLeft'=uValue04_E) & (observedRight'=uValue24_E) & (observedUp'=uValue13_E) & (observedDown'=uValue10_E) & (state'=2);
+		(observe, xCoord=2 & yCoord=0, {}) -> (observedLeft'=uValue10_E) & (observedRight'=uValue30_E) & (observedUp'=uValue24_E) & (observedDown'=uValue21_E) & (state'=2);
+		(observe, xCoord=2 & yCoord=1, {}) -> (observedLeft'=uValue11_E) & (observedRight'=uValue31_E) & (observedUp'=uValue20_E) & (observedDown'=uValue22_E) & (state'=2);
+		(observe, xCoord=2 & yCoord=2, {}) -> (observedLeft'=uValue12_E) & (observedRight'=uValue32_E) & (observedUp'=uValue21_E) & (observedDown'=uValue23_E) & (state'=2);
+		(observe, xCoord=2 & yCoord=3, {}) -> (observedLeft'=uValue13_E) & (observedRight'=uValue33_E) & (observedUp'=uValue22_E) & (observedDown'=uValue24_E) & (state'=2);
+		(observe, xCoord=2 & yCoord=4, {}) -> (observedLeft'=uValue14_E) & (observedRight'=uValue34_E) & (observedUp'=uValue23_E) & (observedDown'=uValue20_E) & (state'=2);
+		(observe, xCoord=3 & yCoord=0, {}) -> (observedLeft'=uValue20_E) & (observedRight'=uValue40_E) & (observedUp'=uValue34_E) & (observedDown'=uValue31_E) & (state'=2);
+		(observe, xCoord=3 & yCoord=1, {}) -> (observedLeft'=uValue21_E) & (observedRight'=uValue41_E) & (observedUp'=uValue30_E) & (observedDown'=uValue32_E) & (state'=2);
+		(observe, xCoord=3 & yCoord=2, {}) -> (observedLeft'=uValue22_E) & (observedRight'=uValue42_E) & (observedUp'=uValue31_E) & (observedDown'=uValue33_E) & (state'=2);
+		(observe, xCoord=3 & yCoord=3, {}) -> (observedLeft'=uValue23_E) & (observedRight'=uValue43_E) & (observedUp'=uValue32_E) & (observedDown'=uValue34_E) & (state'=2);
+		(observe, xCoord=3 & yCoord=4, {}) -> (observedLeft'=uValue24_E) & (observedRight'=uValue44_E) & (observedUp'=uValue33_E) & (observedDown'=uValue30_E) & (state'=2);
+		(observe, xCoord=4 & yCoord=0, {}) -> (observedLeft'=uValue30_E) & (observedRight'=uValue00_E) & (observedUp'=uValue44_E) & (observedDown'=uValue41_E) & (state'=2);
+		(observe, xCoord=4 & yCoord=1, {}) -> (observedLeft'=uValue31_E) & (observedRight'=uValue01_E) & (observedUp'=uValue40_E) & (observedDown'=uValue42_E) & (state'=2);
+		(observe, xCoord=4 & yCoord=2, {}) -> (observedLeft'=uValue32_E) & (observedRight'=uValue02_E) & (observedUp'=uValue41_E) & (observedDown'=uValue43_E) & (state'=2);
+		(observe, xCoord=4 & yCoord=3, {}) -> (observedLeft'=uValue33_E) & (observedRight'=uValue03_E) & (observedUp'=uValue42_E) & (observedDown'=uValue44_E) & (state'=2);
+		(observe, xCoord=4 & yCoord=4, {}) -> (observedLeft'=uValue34_E) & (observedRight'=uValue04_E) & (observedUp'=uValue43_E) & (observedDown'=uValue40_E) & (state'=2);
+	endupdate
+endagent
+
+environment
+	uValue00 : int init 0;
+	uValue01 : int init 0;
+	uValue02 : int init 0;
+	uValue03 : int init 0;
+	uValue04 : int init 0;
+	uValue10 : int init 0;
+	uValue11 : int init 0;
+	uValue12 : int init 0;
+	uValue13 : int init 0;
+	uValue14 : int init 0;
+	uValue20 : int init 0;
+	uValue21 : int init 0;
+	uValue22 : int init 0;
+	uValue23 : int init 0;
+	uValue24 : int init 0;
+	uValue30 : int init 0;
+	uValue31 : int init 0;
+	uValue32 : int init 0;
+	uValue33 : int init 0;
+	uValue34 : int init 0;
+	uValue40 : int init 0;
+	uValue41 : int init 0;
+	uValue42 : int init 0;
+	uValue43 : int init 0;
+	uValue44 : int init 0;
+	
+	update
+		(true, {visit00}) -> (uValue00'=floor(min(uValue10, uValue40, uValue01, uValue04))+1);
+		(true, {visit01}) -> (uValue01'=floor(min(uValue11, uValue41, uValue02, uValue00))+1);
+		(true, {visit02}) -> (uValue02'=floor(min(uValue12, uValue42, uValue03, uValue01))+1);
+		(true, {visit03}) -> (uValue03'=floor(min(uValue13, uValue43, uValue04, uValue02))+1);
+		(true, {visit04}) -> (uValue04'=floor(min(uValue14, uValue44, uValue00, uValue03))+1);
+		(true, {visit10}) -> (uValue10'=floor(min(uValue20, uValue00, uValue11, uValue14))+1);
+		(true, {visit11}) -> (uValue11'=floor(min(uValue21, uValue01, uValue12, uValue10))+1);
+		(true, {visit12}) -> (uValue12'=floor(min(uValue22, uValue02, uValue13, uValue11))+1);
+		(true, {visit13}) -> (uValue13'=floor(min(uValue23, uValue03, uValue14, uValue12))+1);
+		(true, {visit14}) -> (uValue14'=floor(min(uValue24, uValue04, uValue10, uValue13))+1);
+		(true, {visit20}) -> (uValue20'=floor(min(uValue30, uValue10, uValue21, uValue24))+1);
+		(true, {visit21}) -> (uValue21'=floor(min(uValue31, uValue11, uValue22, uValue20))+1);
+		(true, {visit22}) -> (uValue22'=floor(min(uValue32, uValue12, uValue23, uValue21))+1);
+		(true, {visit23}) -> (uValue23'=floor(min(uValue33, uValue13, uValue24, uValue22))+1);
+		(true, {visit24}) -> (uValue24'=floor(min(uValue34, uValue14, uValue20, uValue23))+1);
+		(true, {visit30}) -> (uValue30'=floor(min(uValue40, uValue20, uValue31, uValue34))+1);
+		(true, {visit31}) -> (uValue31'=floor(min(uValue41, uValue21, uValue32, uValue30))+1);
+		(true, {visit32}) -> (uValue32'=floor(min(uValue42, uValue22, uValue33, uValue31))+1);
+		(true, {visit33}) -> (uValue33'=floor(min(uValue43, uValue23, uValue34, uValue32))+1);
+		(true, {visit34}) -> (uValue34'=floor(min(uValue44, uValue24, uValue30, uValue33))+1);
+		(true, {visit40}) -> (uValue40'=floor(min(uValue00, uValue30, uValue41, uValue44))+1);
+		(true, {visit41}) -> (uValue41'=floor(min(uValue01, uValue31, uValue42, uValue40))+1);
+		(true, {visit42}) -> (uValue42'=floor(min(uValue02, uValue32, uValue43, uValue41))+1);
+		(true, {visit43}) -> (uValue43'=floor(min(uValue03, uValue33, uValue44, uValue42))+1);
+		(true, {visit44}) -> (uValue44'=floor(min(uValue04, uValue34, uValue40, uValue43))+1);
+	endupdate
+endenvironment
+
+label "allVisited" = uValue00_E>0 & uValue01_E>0 & uValue02_E>0 & uValue03_E>0 & uValue04_E>0 & uValue10_E>0 & uValue11_E>0 & uValue12_E>0 & uValue13_E>0 & uValue14_E>0 & uValue20_E>0 & uValue21_E>0 & uValue22_E>0 & uValue23_E>0 & uValue24_E>0 & uValue30_E>0 & uValue31_E>0 & uValue32_E>0 & uValue33_E>0 & uValue34_E>0 & uValue40_E>0 & uValue41_E>0 & uValue42_E>0 & uValue43_E>0 & uValue44_E>0;

@@ -1,0 +1,28 @@
+asynchronous = {a}
+agentEnvironment = {e}
+globalSynchronous = {g}
+
+agent module M1
+    phase1 : [1..2] init 1;
+
+    [a] (phase1=1) -> 0.5:(phase1'=1) + 0.5:(phase1'=2);
+    [g] (phase1=2) -> 1.0:(phase1'=2);
+endmodule
+
+agent module M2
+    phase2 : [3..4] init 3;
+
+    [e] (phase2=3) -> 0.5:(phase2'=3) + 0.5:(phase2'=4);
+    [g] (phase2=4) -> 1.0:(phase2'=4);
+endmodule
+
+environment module M3
+    phase : [5..6] init 5;
+
+    [g] (phase=5) -> 0.5:(phase'=5) + 0.5:(phase'=6);
+    [e] (phase=5) -> 1.0:(phase'=5);
+    [g] (phase=6) -> 1.0:(phase'=6);
+    [e] (phase=6) -> 1.0:(phase'=6);
+endmodule
+
+label "done" = (phase1_0_0=2);

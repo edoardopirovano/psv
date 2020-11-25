@@ -1,0 +1,38 @@
+asynchronous = {sense}
+agentEnvironment = {halt}
+globalSynchronous = {signal, move}
+
+agent module WithSensor
+    locationA : [1..7] init 1;
+    sensed : [0..7] init 1;
+    hasSensed : bool init true;
+    stoppedA : bool init false;
+
+	[move] (hasSensed & sensed<5) -> 1.0:(locationA'=locationA+1) & (hasSensed'=false) & (sensed'=0);
+	[sense] (!hasSensed) -> 0.5:(sensed'=locationA) & (hasSensed'=true)
+	    + 0.25:(sensed'=locationA+1) & (hasSensed'=true)
+	    + 0.25:(sensed'=locationA-1) & (hasSensed'=true);
+
+	[halt] (sensed>=5 & !stoppedA) -> 1.0:(stoppedA'=true);
+	[signal] (stoppedA) -> 1.0:(stoppedA'=true);
+endmodule
+
+agent module WithoutSensor
+    locationB : [1..7] init 1;
+    stoppedB : bool init false;
+
+	[move] (!stoppedB) -> 1.0:(locationB'=locationB+1);
+	[signal] (true) -> 1.0:(stoppedB'=true);
+endmodule
+
+environment module Env
+    locationE : [1..7] init 1;
+    halted : bool init false;
+
+	[move] (!halted) -> 1.0:(locationE'=locationE+1);
+	[halt] (!halted) -> 1.0:(halted'=halted);
+	[signal] (halted) -> 1.0:(halted'=halted);
+endmodule
+
+label "targetRegion0" = (locationA_0_0 = 4) | (locationA_0_0 = 5) | (locationA_0_0 = 6);
+label "stopped" = (halted_E);

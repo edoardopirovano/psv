@@ -1,0 +1,27 @@
+asynchronous      = {a}
+agentEnvironment  = {e}
+globalSynchronous = {g}
+
+agent module AgentA
+	stateA : [1..2] init 1;
+
+	[a] (stateA=1) -> 0.5:(stateA'=1) + 0.5:(stateA'=2);
+	[g] (stateA=2) -> 1.0:(stateA'=2);
+endmodule
+
+agent module AgentB
+	stateB : [3..4] init 3;
+
+	[e] (stateB=3) -> 0.5:(stateB'=3) + 0.5:(stateB'=4);
+	[g] (stateB=4) -> 1.0:(stateB'=4);
+endmodule
+
+environment module Environment
+	stateE : int init 5;
+
+	[e] (stateE=5) -> 1.0:(stateE'=5);
+	[g] (stateE=5) -> 0.5:(stateE'=5) + 0.5:(stateE'=6);
+	[g] (stateE=6) -> 1.0:(stateE'=6);
+endmodule
+
+label "firstAgentTransitioned" = (stateA_0_0 = 2);

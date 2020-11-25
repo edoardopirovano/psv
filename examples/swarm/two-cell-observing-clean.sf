@@ -1,0 +1,38 @@
+agent
+	atA : bool init true;
+	aClean : bool init false;
+
+	// Fail all actions with probability 0.5
+	[fail] true : 0.5;
+
+	// If we believe A isn't clean, clean it or observe it
+	[cleanA] (atA & !aClean) : 0.25;
+	[observe] (atA & !aClean) : 0.25;
+
+	// If we know A is clean, announce it to others or move to B
+	[announceCleanA] (atA & aClean) : 0.25;
+	[move] (atA & aClean) : 0.25;
+
+	// At B just try to clean
+	[cleanB] !atA : 0.5;
+
+	update
+	    (move, atA, {}) -> (atA'=false);
+	    (observe, a_E, {}) -> (aClean'=true);
+
+	    // Listen to announcements when failing or cleaning (doesn't matter in other cases)
+	    (fail, true, {announceCleanA}) -> (aClean'=true);
+	    (cleanA, true, {announceCleanA}) -> (aClean'=true);
+	endupdate
+endagent
+
+environment
+	a : bool init false;
+	b : bool init false;
+	update
+	    (true, {cleanA}) -> (a'=true);
+	    (true, {cleanB}) -> (b'=true);
+	endupdate
+endenvironment
+
+label "clean" = a_E & b_E;

@@ -1,0 +1,29 @@
+asynchronous = {approach}
+agentEnvironment = {enter, exit, stuck}
+globalSynchronous = {}
+
+agent module M1
+    // 0: waiting
+    // 1: inside
+    // 2: stuck
+    // 3: outside
+    phase : [0..3] init 3;
+
+    [enter] (phase=0) -> 1.0:(phase'=1);
+    [exit] (phase=1) -> 1.0:(phase'=3);
+    [stuck] (phase=2) -> 1.0:(phase'=2);
+    [approach] (phase=3) -> 0.7:(phase'=0) + 0.3:(phase'=3);
+endmodule
+
+environment module M2
+    // 0: green
+    // 1: red
+    // 2: agent stuck
+    phaseE : [0..2] init 0;
+
+    [enter] (phaseE=0) -> 1.0:(phaseE'=1);
+    [exit] (phaseE=1) -> 1.0:(phaseE'=0);
+    [stuck] true -> 1.0:(phaseE'=2);
+endmodule
+
+label "stuck" = (phaseE_E=2);
