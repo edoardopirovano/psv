@@ -3,8 +3,6 @@ agent
 
 	[a] (stateA=0);
 	[b] (stateA=1);
-
-	[nullA] true;
 	
 	update
 		(a, true, {}) -> 0.5:(stateA'=0) + 0.5:(stateA'=1);
@@ -17,8 +15,6 @@ agent
 	[c] (stateB=2);
 	[d] (stateB=3);
 
-	[nullB] true;
-
 	update
 		(c, true, {b}) -> 1.0:(stateB'=3);
 	endupdate
@@ -28,8 +24,6 @@ environment
 	state : [4..5] init 4;
 
 	[e] true;
-
-	[nullE] true;
 	
 	update
 		(e, state=4, {d}) -> 1.0:(state'=5);
