@@ -1,6 +1,0 @@
-// each players want to maximise the probability of sending smax messages
-<<p1>> N=?[ P[(F sent1=smax),(F sent2=smax)]  ]
-
-// each players want to maximise the probability of sending smax messages within t steps
-<<p1>> N=?[ P[(F<=k sent1=smax),(F<=k sent2=smax)]  ]
-

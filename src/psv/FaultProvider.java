@@ -17,6 +17,9 @@ public class FaultProvider {
     public void introduceAbstract(final RenamedModule rm, final FindAllVars varVisitor) throws PrismLangException {
     }
 
+    public void accept(final FindAllVars replacer) throws PrismLangException {
+    }
+
     ChoiceListFlexi getChoice(final Command command, final State exploreState, final int agentType, final int agent) throws PrismLangException {
         final ChoiceListFlexi choice = new ChoiceListFlexi();
         for (int i = 0; i < command.getUpdates().getNumUpdates(); ++i) {

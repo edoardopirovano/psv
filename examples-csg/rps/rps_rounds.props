@@ -1,9 +1,0 @@
-<<p1>> R{"win"}max=?[C]
-<<p1,p2>> R{"win"}max=?[C]
-
-<<p1>> R{"rounds"}min=?[C]
-<<p1,p2>> R{"rounds"}min=?[C]
-
-<<p1>>Pmax=?[F (m1=0 & m2=2) | (m1=1 & m2=0) | (m1=2 & m2=1) ]
-<<p1,p2>> Pmax=?[F (m1=0 & m2=2) | (m1=1 & m2=0) | (m1=2 & m2=1) ]
-

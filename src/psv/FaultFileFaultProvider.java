@@ -11,8 +11,8 @@ import java.util.List;
 
 public class FaultFileFaultProvider extends FaultProvider {
     FaultFile faultFile;
-    List<List<List<Fault>>> concreteFaults;
-    List<List<Fault>> abstractFaults;
+    List<List<List<Fault>>> concreteFaults = new ArrayList<>();
+    List<List<Fault>> abstractFaults = new ArrayList<>();
 
     FaultFileFaultProvider(final FaultFile faultFile) {
         this.faultFile = faultFile;
@@ -44,10 +44,20 @@ public class FaultFileFaultProvider extends FaultProvider {
     }
 
     @Override
+    public void accept(final FindAllVars replacer) throws PrismLangException {
+        for (final List<List<Fault>> fll : concreteFaults) {
+            for (final List<Fault> faults : fll) {
+                for (final Fault fault : faults)
+                    fault.accept(replacer);
+            }
+        }
+    }
+
+    @Override
     protected ChoiceListFlexi getChoice(final Command command, final State exploreState, final int agentType, final int agent) throws PrismLangException {
         final ChoiceListFlexi result = super.getChoice(command, exploreState, agentType, agent);
-        if (agent == -1) return result;
-        if (agent == -2) {
+        if (agentType == -1) return result;
+        if (agentType == -2) {
             for (int i = 0; i < concreteFaults.size(); ++i) {
                 for (int j = 0; j < concreteFaults.get(i).size(); ++j)
                     productWith(result, command, exploreState, i, j);

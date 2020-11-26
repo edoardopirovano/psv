@@ -1,6 +1,0 @@
-<<investor>> R{"profit_lc"}max=? [ C ]
-
-<<investor>> R{"profit_ec"}max=? [ C ]
-
-<<investor>> R{"profit_mc"}max=? [ C ]
-

@@ -1,5 +1,0 @@
-// eventually both players reach their goal without crashing
-<<p1>> N=?[ P[(F "goal1"),(F "goal2")]  ] 
-
-// players reach their goals within a bounded number of steps
-<<p1>> N=?[ P[(F<=k "goal1"),(F<=k "goal2")]  ] 

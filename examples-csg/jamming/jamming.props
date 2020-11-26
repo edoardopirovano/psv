@@ -1,5 +1,0 @@
-// minimum probability the user can ensure that less than half are jammed
-<<user>> Pmax=? [ F sent>=slots/2 ]
-
-// maximum expected number of messages the user can ensure are sent
-<<user>> R{"rew"}max=? [ C ]

@@ -82,12 +82,14 @@ public class PSV {
             final List<Integer> numAgents = new ArrayList<>();
             for (final String n : cmd.getOptionValue("c").split(","))
                 numAgents.add(NumberUtils.createInteger(n));
-            if (cmd.hasOption("f"))
+            if (cmd.hasOption("f")) {
+                checkFaultFile();
                 modelGenerator = new AsyncConcreteModelGenerator(asyncSwarmFile, faultFile, numAgents);
-            else if (cmd.hasOption("a"))
+            } else if (cmd.hasOption("a")) {
                 modelGenerator = new AsyncConcreteModelGenerator(asyncSwarmFile, null, numAgents);
-            else
+            } else {
                 modelGenerator = new SyncConcreteModelGenerator(syncSwarmFile, numAgents);
+            }
         } else {
             if (cmd.hasOption("a")) {
                 indexCalculator.fillTo(asyncSwarmFile.getAgents().size());
@@ -99,12 +101,14 @@ public class PSV {
             processLabelList(pf.getLabelList());
             for (int i = 0; i < pf.getNumProperties(); ++i)
                 pf.getPropertyObject(i).getExpression().accept(indexCalculator);
-            if (cmd.hasOption("f"))
+            if (cmd.hasOption("f")) {
+                checkFaultFile();
                 modelGenerator = new AsyncAbstractModelGenerator(asyncSwarmFile, faultFile, indexCalculator.getIndex());
-            else if (cmd.hasOption("a"))
+            } else if (cmd.hasOption("a")) {
                 modelGenerator = new AsyncAbstractModelGenerator(asyncSwarmFile, null, indexCalculator.getIndex());
-            else
+            } else {
                 modelGenerator = new SyncAbstractModelGenerator(syncSwarmFile, indexCalculator.getIndex());
+            }
             indexCalculator.reset();
         }
         prism.loadModelGenerator(modelGenerator);
@@ -113,6 +117,12 @@ public class PSV {
             prism.getBuiltModelExplicit().exportToDotFile(cmd.getOptionValue("e"));
         for (int i = 0; i < pf.getNumProperties(); ++i)
             prism.modelCheck(pf, pf.getProperty(i));
+    }
+
+    private void checkFaultFile() {
+        if (faultFile.getFaults().size() != asyncSwarmFile.getAgents().size())
+            throw new IllegalArgumentException("The fault file passed should describe faults for the same number of " +
+                    "agent types as there are in the swarm file.");
     }
 
     private void readInAsyncSwarmFile(final String fileName) throws PrismLangException {

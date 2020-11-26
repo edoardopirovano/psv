@@ -1,0 +1,5 @@
+agent
+(move, state=3) -> 0.4:(state'=4) + 0.6:true;
+
+agent
+(move, state=3) -> 0.7:(state'=4) + 0.3:true;

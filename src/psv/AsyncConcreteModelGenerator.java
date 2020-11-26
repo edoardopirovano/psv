@@ -83,6 +83,7 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
         }
         environment.accept(replacer);
         labelList.accept(replacer);
+        faultProvider.accept(replacer);
 
         transitionList = new TransitionList();
         transitionListBuilt = false;
