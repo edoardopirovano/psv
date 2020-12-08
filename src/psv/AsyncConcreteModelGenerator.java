@@ -48,16 +48,15 @@ public class AsyncConcreteModelGenerator extends DefaultModelGenerator {
 
         renamedAgents = new ArrayList<>();
         for (int i = 0; i < m.size(); ++i) {
+            renamedAgents.add(new ArrayList<>());
             for (int j = 0; j < m.get(i); ++j) {
-                final RenamedModule rm = new RenamedModule("agent", "agent_" + i + "_" + j);
+                final RenamedModule rm = new RenamedModule("agent", "agent_" + (i + 1) + "_" + (j + 1));
                 for (final Declaration decl : swarmFile.getAgents().get(i).getDeclarations()) {
                     final Declaration declarationCopy = (Declaration) decl.deepCopy();
-                    declarationCopy.setName(decl.getName() + "_" + i + "_" + j);
+                    declarationCopy.setName(decl.getName() + "_" + (i + 1) + "_" + (j + 1));
                     varList.addVar(declarationCopy, 0, constantValues);
                     rm.addRename(decl.getName(), declarationCopy.getName());
                 }
-                if (renamedAgents.size() == i)
-                    renamedAgents.add(new ArrayList<>());
                 Module agentCopy = (Module) swarmFile.getAgents().get(i).deepCopy();
                 agentCopy = (Module) agentCopy.rename(rm);
                 renamedAgents.get(i).add(agentCopy);
