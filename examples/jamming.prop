@@ -1,0 +1,1 @@
+<<agent_1_1,env>> P>=0.5 [ F <= 150 "receivedAll" ]

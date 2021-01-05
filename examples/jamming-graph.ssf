@@ -37,4 +37,4 @@ environment
 	endupdate
 endenvironment
 
-label "receivedAll" = received_env=3;
+label "receivedAll" = received_E=3;

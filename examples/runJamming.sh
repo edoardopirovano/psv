@@ -1,9 +1,9 @@
 #! /bin/sh
 
 mkdir -p results
-for i in 20 25 30 35 40 45
+for i in 3 4 5
 do
-	for j in 6 8 10 12 14
+	for j in 5 10 15 20 25
 	do
 		./jamming.sh $i $j | tee results/$i-$j
 		echo ""

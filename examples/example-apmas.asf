@@ -24,4 +24,4 @@ environment module Environment
 	[g] (stateE=6) -> 1.0:(stateE'=6);
 endmodule
 
-label "firstAgentTransitioned" = (stateA_0_0 = 2);
+label "firstAgentTransitioned" = (stateA_1_1 = 2);

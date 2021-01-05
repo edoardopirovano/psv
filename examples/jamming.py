@@ -33,4 +33,4 @@ print("\t\t(receive, received<" + str(k) + ", {transmit}) -> 1.0:(received'=rece
 print("\tendupdate")
 print("endenvironment")
 print("")
-print("label \"receivedAll\" = received_env=" + str(k) + ";")
+print("label \"receivedAll\" = received_E=" + str(k) + ";")
