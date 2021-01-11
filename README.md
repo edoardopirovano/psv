@@ -1,13 +1,21 @@
-This repository contains the Probabilistic Swarm Verifier for Strategic Properties (PSV-S), which is based on PRISM-games.
+This repository contains the Probabilistic Swarm Verifier (PSV) package presented in my thesis, which is based on PRISM-games.
 
-To install on Linux, ensure you have recent versions of Make, GCC, G++ and JDK 8 intalled and run `make` followed by install `./install.sh` in this directory.
+To install on Linux, ensure you have recent versions of Make, GCC, G++ and JDK intalled and run `make` followed by install `./install.sh` in this directory.
    
-To run, execute `bin/psv-s`, which will give further instructions.
+To run, execute `bin/psv`, which will give further instructions. In particular, it specifies the
+instructions that the program accepts as:
 
-Example swarm systems can be found in `examples/swarms`. Once in this folder, to reproduce the results in Figure 1, run:
+ -a,--async                  Check an asynchronous system (default is synchronous).
+ -c,--concrete <arg>         Pass a comma separated list of integers to check a concrete system of that size.
+ -e,--export <arg>           Path to export DOT file of model to.
+ -f,--faultsFile <arg>       Path to a file specifying faults to inject.
+ -p,--propertiesFile <arg>   Path to properties file.
+ -s,--swarmFile <arg>        Path to the swarm model file.
 
-  ../../bin/psv-s -s jamming-fig1.sf -p jamming-fig1.pctl -c n
+The scenarios considered in my thesis can be found in the `examples` directory. For instance, to reproduce the results in the graph showing the results for the channel jamming scenario, run the command:
 
-replacing `n` with the desired number of agents (1,2,3,...).
+  bin/psv -s examples/jamming-graph.ssf -p examples/jamming-graph.prop -c n
 
-To reproduce the timing results in Table 1, run `./runAll.sh`. This will output one cell of the table at a time, moving down columns then across rows.
+replacing `n` with the desired number of agents (1,2,3,...). To obatin the lower threshold given by the abstract model, run the command:
+
+  bin/psv -s examples/jamming-graph.ssf -p examples/jamming-graph.prop
