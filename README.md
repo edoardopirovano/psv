@@ -1,6 +1,6 @@
 This repository contains the Probabilistic Swarm Verifier (PSV) package presented in my thesis, which is based on PRISM-games.
 
-To install on Linux, ensure you have recent versions of Make, GCC, G++ and JDK intalled and run `make` followed by install `./install.sh` in this directory.
+To install on Linux, ensure you have recent versions of Make, GCC, G++ and JDK intalled and run `make` followed by `./install.sh` in this directory.
    
 To run, execute `bin/psv`, which will give further instructions on the options available.
 
