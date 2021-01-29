@@ -1,0 +1,5 @@
+agent
+(g, stateA=2) -> 0.4:(stateA'=1) + 0.6:true;
+
+agent
+(g, stateB=4) -> 0.2:(stateB'=3) + 0.8:true;
